@@ -4,12 +4,17 @@ import Home from "./components/Home";
 import Register from "./components/Register";
 import ExploreWorld from "./components/ExploreWorld";
 import ExploreContinent from "./components/ExploreContinent";
+import Login from "./components/Login";
 
 import "./App.css";
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 function App() {
+  fetch("http://localhost:8080/api/countries")
+    .then((res) => res.json())
+    .then((data) => console.log(data));
+
   return (
     <div className="App">
       <Router>
@@ -20,6 +25,7 @@ function App() {
           {/* <Route path="/explorecontinent/:id" element={<ExploreWorld />} /> */}
           <Route path="/explorecontinent/:id" element={<ExploreContinent />} />
           <Route path="/exploreworld" element={<ExploreWorld />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
     </div>
