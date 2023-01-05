@@ -9,7 +9,7 @@ export default function UserIndex({ searchedUsers }) {
   const [users, setUsers] = useState(searchedUsers);
 
   useEffect(() => {
-    API.GET(API.ENDPOINTS.allUsers, API.getHeaders())
+    API.POST(API.ENDPOINTS.allUsers, {}, API.getHeaders())
       .then(({ data }) => {
         setUsers(data);
       })

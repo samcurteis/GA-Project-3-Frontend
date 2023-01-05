@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { API } from '../lib/api';
 import { useAuthenticated } from '../hooks/useAuthenticated';
 import CreateEntry from './common/CreateEntry';
+import ProfilePicture from './common/ProfilePicture'
 
 import {
   Container,
@@ -19,7 +20,7 @@ export default function UserPage() {
   const [isUpdated, setIsUpdated] = useState(false);
 
   useEffect(() => {
-    API.GET(API.ENDPOINTS.singleUser(id), {}, API.getHeaders())
+    API.POST(API.ENDPOINTS.singleUser(id), {}, API.getHeaders())
       .then(({ data }) => {
         setSingleUser(data);
       })
@@ -37,6 +38,9 @@ export default function UserPage() {
     <>
       <Container maxWidth='lg' sx={{ display: 'flex' }}>
         <Box>
+        {singleUser?.cloudinaryImageId && (
+          <ProfilePicture cloudinaryImageId={singleUser.cloudinaryImageId} />
+        )}
           <CardActions>
             {isLoggedIn && (
               <>
