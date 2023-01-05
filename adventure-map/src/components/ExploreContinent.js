@@ -19,14 +19,14 @@ import { oceaniaGeoURL } from "../mapping/countries/oceania.js";
 import { southAmericaGeoURL } from "../mapping/countries/southAmerica.js";
 // TODO antarctica
 
-const GEOKEY = {
-  Europe: europeGeoURL,
-  Africa: africaGeoURL,
-  Asia: asiaGeoURL,
-  North_America: northAmericaGeoURL,
-  South_America: southAmericaGeoURL,
-  Australia: oceaniaGeoURL,
-  Oceania: oceaniaGeoURL,
+const GEOKEYS = {
+  Europe: [europeGeoURL, [18.5, 51], 4.55],
+  Africa: [africaGeoURL, [18.5, 2], 2.5],
+  Asia: [asiaGeoURL, [90, 28], 2.2],
+  North_America: [northAmericaGeoURL, [-80, 40], 2.5],
+  South_America: [southAmericaGeoURL, [-60, -19], 2.5],
+  Australia: [oceaniaGeoURL, [148, -23], 3.75],
+  Oceania: [oceaniaGeoURL, [148, -23], 3.75],
 };
 
 //TODO tool tip by mouse
@@ -78,8 +78,8 @@ export default function Home() {
         }}
       >
         <ComposableMap data-tip="">
-          <ZoomableGroup zoom={1}>
-            <Geographies geography={GEOKEY[id]}>
+          <ZoomableGroup zoom={GEOKEYS[id][2]} center={GEOKEYS[id][1]}>
+            <Geographies geography={GEOKEYS[id][0]}>
               {({ geographies }) =>
                 geographies.map((geo) => (
                   <Geography
