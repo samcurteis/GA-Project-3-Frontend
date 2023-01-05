@@ -38,7 +38,9 @@ export default function UserPage() {
     <>
       <Container maxWidth='lg' sx={{ display: 'flex' }}>
         <Box>
+        {singleUser?.cloudinaryImageId && (
           <ProfilePicture cloudinaryImageId={singleUser.cloudinaryImageId} />
+        )}
           <CardActions>
             {isLoggedIn && (
               <>
