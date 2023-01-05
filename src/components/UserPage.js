@@ -26,7 +26,6 @@ export default function UserPage() {
     API.GET(API.ENDPOINTS.singleUser(id), API.getHeaders())
       .then(({ data }) => {
         setSingleUser(data);
-        console.log(singleUser);
       })
       .catch(({ message, response }) => {
         console.log(response);
@@ -36,6 +35,7 @@ export default function UserPage() {
   }, [id, isUpdated]);
 
   const goToMap = () => navigate('/');
+  console.log(singleUser)
 
   return (
     <>
