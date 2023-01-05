@@ -52,7 +52,7 @@ export default function Register() {
       AUTH.setToken(loginData.data.token);
 
 
-      navigate('/crafty-beers');
+      navigate('/');
     } catch (e) {
       console.log(e);
       setError(true);

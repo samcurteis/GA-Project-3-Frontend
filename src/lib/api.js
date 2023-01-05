@@ -4,11 +4,15 @@ import { AUTH } from './auth';
 const ENDPOINTS = {
   allCountries: '/api/countries',
   singleCountry: (id) => `/api/countries/${id}`,
-  allEntry: (id) => `/api/entries`,
+  searchCountries: (query) => `/api/countries/search?search=${query}`,
+  allEntries: (id) => `/api/entries`,
   singleEntry: (id) => `/api/entries/${id}`,
+  allUsers: '/api/users',
+  singleUser: (id) => `/api/users/${id}`,
+  searchUsers: (query) => `/api/users/search?search=${query}`,
   login: '/api/login',
   register: '/api/register',
-  search: (query) => `/api/countries/search?search=${query}`
+  cloudinary: `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`
 };
 
 const getHeaders = () => ({
@@ -17,7 +21,8 @@ const getHeaders = () => ({
   }
 });
 
-const GET = (endpoint) => axios.get(endpoint);
+const GET = (endpoint, headers) =>
+  headers ? axios.get(endpoint, headers) : axios.get(endpoint);
 const POST = (endpoint, body, headers) =>
   headers ? axios.post(endpoint, body, headers) : axios.post(endpoint, body);
 const PUT = (endpoint, body, headers) => axios.put(endpoint, body, headers);
