@@ -14,10 +14,6 @@ import "./App.css";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 function App() {
-  fetch("http://localhost:8080/api/countries")
-    .then((res) => res.json())
-    .then((data) => console.log(data));
-
   return (
     <div className="App">
       <Router>

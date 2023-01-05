@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import {
   Card,
   CardContent,
-  CardMedia,
   Typography,
   CardActionArea
 } from '@mui/material';
