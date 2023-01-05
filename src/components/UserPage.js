@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { API } from '../lib/api';
 import { useAuthenticated } from '../hooks/useAuthenticated';
 import CreateEntry from './common/CreateEntry';
+import ProfilePicture from './common/ProfilePicture'
 
 import {
   Container,
@@ -37,6 +38,7 @@ export default function UserPage() {
     <>
       <Container maxWidth='lg' sx={{ display: 'flex' }}>
         <Box>
+          <ProfilePicture cloudinaryImageId={singleUser.cloudinaryImageId} />
           <CardActions>
             {isLoggedIn && (
               <>
