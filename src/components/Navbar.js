@@ -2,7 +2,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AUTH } from '../lib/auth';
 import { useAuthenticated } from '../hooks/useAuthenticated';
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
-import UserPage from './UserPage';
 
 const Navbar = () => {
   const navigate = useNavigate();
