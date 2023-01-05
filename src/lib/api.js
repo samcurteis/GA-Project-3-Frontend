@@ -21,7 +21,8 @@ const getHeaders = () => ({
   }
 });
 
-const GET = (endpoint) => axios.get(endpoint);
+const GET = (endpoint, headers) =>
+  headers ? axios.get(endpoint, headers) : axios.get(endpoint);
 const POST = (endpoint, body, headers) =>
   headers ? axios.post(endpoint, body, headers) : axios.post(endpoint, body);
 const PUT = (endpoint, body, headers) => axios.put(endpoint, body, headers);
