@@ -1,18 +1,14 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { API } from '../lib/api';
 import { useAuthenticated } from '../hooks/useAuthenticated';
-import { AUTH } from '../lib/auth';
 import CreateEntry from './common/CreateEntry';
-import ProfilePicture from './common/ProfilePicture';
 
 import {
   Container,
   Box,
   CardActions,
-  CardContent,
-  Button,
-  Typography
+  Button
 } from '@mui/material';
 
 export default function UserPage() {
@@ -23,7 +19,7 @@ export default function UserPage() {
   const [isUpdated, setIsUpdated] = useState(false);
 
   useEffect(() => {
-    API.GET(API.ENDPOINTS.singleUser(id), API.getHeaders())
+    API.GET(API.ENDPOINTS.singleUser(id), {}, API.getHeaders())
       .then(({ data }) => {
         setSingleUser(data);
       })
