@@ -5,6 +5,7 @@ import Register from './components/Register';
 import ExploreWorld from './components/ExploreWorld';
 import ExploreContinent from './components/ExploreContinent';
 import Login from './components/Login';
+import Navbar from './components/Navbar'
 
 import './App.css';
 
@@ -18,7 +19,7 @@ function App() {
   return (
     <div className='App'>
       <Router>
-        //navbar??
+        <Navbar />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/register' element={<Register />} />
