@@ -4,6 +4,7 @@ import { API } from '../lib/api';
 import { useAuthenticated } from '../hooks/useAuthenticated';
 import { AUTH } from '../lib/auth';
 import CreateEntry from './CreateEntry';
+import ProfilePicture from './common/ProfilePicture';
 
 import {
   Container,
@@ -25,9 +26,11 @@ export default function UserPage() {
     API.GET(API.ENDPOINTS.singleUser(id))
       .then(({ data }) => {
         setSingleUser(data);
+        console.log(singleUser);
       })
-      .catch(({ response }) => {
+      .catch(({ message, response }) => {
         console.log(response);
+        console.log(message)
       });
     setIsUpdated(false);
   }, [id, isUpdated]);
@@ -38,36 +41,16 @@ export default function UserPage() {
     <>
       <Container maxWidth='lg' sx={{ display: 'flex' }}>
         <Box>
-          <img src={singleBeer?.image} alt={singleBeer?.name} />
-        </Box>
-        <Box>
-          <CardContent>
-            <Typography variant='h5' component='p'>
-              {singleBeer?.name}
-            </Typography>
-            <Typography color='text.secondary'>{singleBeer?.type}</Typography>
-            <Typography color='text.primary' sx={{ fontSize: 18 }} gutterBottom>
-              {singleBeer?.description}
-            </Typography>
-            <Typography color='text.secondary'>
-              {singleBeer?.strength}% ABV
-            </Typography>
-            {singleBeer?.brewery?.name && (
-              <Typography color='text.secondary'>
-                Brewed by {singleBeer?.brewery?.name}
-              </Typography>
-            )}
-          </CardContent>
           <CardActions>
             {isLoggedIn && (
               <>
-                <Button size='small' sx={{ color: '#317873' }}>
-                  Visited somewhere recently?
-                </Button>
-                <CreateEntry />
+                <Box>
+                  <p> Visited somewhere recently?</p>
+                  <CreateEntry />
+                </Box>
               </>
             )}
-            <Button size='small' sx={{ color: '#317873' }} onClick={goToMap}>
+            <Button size='small' sx={{ color: '#3B3D40' }} onClick={goToMap}>
               Back to the Map!
             </Button>
           </CardActions>
