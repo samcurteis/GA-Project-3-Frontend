@@ -4,12 +4,11 @@ import { AUTH } from './auth';
 const ENDPOINTS = {
   allCountries: '/api/countries',
   singleCountry: (id) => `/api/countries/${id}`,
-  createEntry: (id) => `/api/countries/${id}/entries`,
-  singleEntry: (countryId, entriesId) =>
-    `/api/countries/${countryId}/entries/${entriesId}`,
+  allEntry: (id) => `/api/entries`,
+  singleEntry: (id) => `/api/entries/${id}`,
   login: '/api/login',
   register: '/api/register',
-  search:(query)=> `/api/countries/search?search=${query}`
+  search: (query) => `/api/countries/search?search=${query}`
 };
 
 const getHeaders = () => ({
