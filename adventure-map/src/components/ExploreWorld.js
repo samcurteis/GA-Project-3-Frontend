@@ -27,8 +27,12 @@ const colors = {
 // export default function ExploreWorld() {
 export default function Home() {
   const navigate = useNavigate();
-  const navigateToContinent = () =>
+
+  const navigateToContinent = (geo) =>
     navigate(`/explorecontinent/${geo.properties.CONTINENT}`);
+  //!testing with home
+  // const navigateToContinent = () => navigate(`/`);
+
   const [content, setContent] = useState("");
   // function handleClick(geo) {
   //   console.log(geo.properties);

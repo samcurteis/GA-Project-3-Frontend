@@ -10,7 +10,24 @@ import {
   ZoomableGroup,
 } from "react-simple-maps";
 
-import { continentsGeoURL } from "../mapping/continents.js";
+// import { continentsGeoURL } from "../mapping/continents.js";
+import { europeGeoURL } from "../mapping/countries/europe.js";
+import { africaGeoURL } from "../mapping/countries/africa.js";
+import { asiaGeoURL } from "../mapping/countries/asia.js";
+import { northAmericaGeoURL } from "../mapping/countries/northAmerica.js";
+import { oceaniaGeoURL } from "../mapping/countries/oceania.js";
+import { southAmericaGeoURL } from "../mapping/countries/southAmerica.js";
+// TODO antarctica
+
+const GEOKEY = {
+  Europe: europeGeoURL,
+  Africa: africaGeoURL,
+  Asia: asiaGeoURL,
+  North_America: northAmericaGeoURL,
+  South_America: southAmericaGeoURL,
+  Australia: oceaniaGeoURL,
+  Oceania: oceaniaGeoURL,
+};
 
 //TODO tool tip by mouse
 const colors = {
@@ -29,10 +46,12 @@ const colors = {
 // export default function ExploreWorld() {
 export default function Home() {
   const navigate = useNavigate();
-  const navigateToCountry = () =>
+  const navigateToCountry = (geo) =>
     navigate(`/explorecontinent/${geo.properties.CONTINENT}`);
 
   const { id } = useParams();
+  // console.log(GEOKEY[id]);
+
   const [content, setContent] = useState("");
   // function handleClick(geo) {
   //   console.log(geo.properties);
@@ -60,13 +79,13 @@ export default function Home() {
       >
         <ComposableMap data-tip="">
           <ZoomableGroup zoom={1}>
-            <Geographies geography={continentsGeoURL}>
+            <Geographies geography={GEOKEY[id]}>
               {({ geographies }) =>
                 geographies.map((geo) => (
                   <Geography
                     geography={geo}
                     // fill="#EAEAEC"
-                    fill={colors[geo.properties.CONTINENT]}
+                    // fill={colors[geo.properties.CONTINENT]}
                     // stroke="grey"
                     style={{
                       default: { outline: "none" },
