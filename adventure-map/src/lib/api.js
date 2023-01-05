@@ -4,8 +4,10 @@ import { AUTH } from './auth';
 const ENDPOINTS = {
   allCountries: '/api/countries',
   singleCountry: (id) => `/api/countries/${id}`,
-  allEntry: (id) => `/api/entries`,
+  allEntries: (id) => `/api/entries`,
   singleEntry: (id) => `/api/entries/${id}`,
+  allUsers: '/api/users',
+  singleUser: (id) => `/api/users/${id}`,
   login: '/api/login',
   register: '/api/register',
   search: (query) => `/api/countries/search?search=${query}`
