@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Card,
   CardContent,
-  CardMedia,
+  // CardMedia,
   Typography,
   CardActionArea
 } from '@mui/material';
@@ -14,7 +14,6 @@ import { Cloudinary } from '@cloudinary/url-gen';
 
 // Import required actions and qualifiers.
 import { thumbnail } from '@cloudinary/url-gen/actions/resize';
-import { byRadius } from '@cloudinary/url-gen/actions/roundCorners';
 import { focusOn } from '@cloudinary/url-gen/qualifiers/gravity';
 import { FocusOn } from '@cloudinary/url-gen/qualifiers/focusOn';
 

@@ -14,10 +14,6 @@ import './App.css';
 window.Buffer = window.Buffer || require('buffer').Buffer;
 
 function App() {
-  fetch('http://localhost:8080/api/countries')
-    .then((res) => res.json())
-    .then((data) => console.log(data));
-
   return (
     <div className='App'>
       <Router>
@@ -25,12 +21,12 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/register' element={<Register />} />
-          {/* <Route path="/explorecontinent/:id" element={<ExploreWorld />} /> */}
-          <Route path='/explorecontinent/:id' element={<ExploreContinent />} />
-          <Route path='/exploreworld' element={<ExploreWorld />} />
           <Route path='/login' element={<Login />} />
           <Route path='/users' element={<UserIndex />} />
           <Route path='/users/:id' element={<UserPage />} />
+          {/* <Route path="/explorecontinent/:id" element={<ExploreWorld />} /> */}
+          <Route path='/explorecontinent/:id' element={<ExploreContinent />} />
+          <Route path='/exploreworld' element={<ExploreWorld />} />
         </Routes>
       </Router>
     </div>
