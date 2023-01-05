@@ -19,7 +19,7 @@ export default function UserPage() {
   const [isUpdated, setIsUpdated] = useState(false);
 
   useEffect(() => {
-    API.GET(API.ENDPOINTS.singleUser(id), {}, API.getHeaders())
+    API.POST(API.ENDPOINTS.singleUser(id), {}, API.getHeaders())
       .then(({ data }) => {
         setSingleUser(data);
       })
