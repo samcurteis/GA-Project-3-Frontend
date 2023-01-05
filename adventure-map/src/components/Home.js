@@ -1,11 +1,20 @@
-const Home = () => (
-  <section className='Home'>
-    <div className='welcome'>
-      <h1>Adventure Map!</h1>
-      <p>I can't remember the slogan</p>
-      <p>potentially the Map in the background or on a separate map page</p>
-    </div>
-  </section>
-);
+import React from 'react';
+import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 
-export default Home;
+const geoUrl = '../assets/world-map.json';
+
+// 'https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json'
+
+export default function Home() {
+  return (
+    <ComposableMap>
+      <Geographies geography={geoUrl}>
+        {({ geographies }) =>
+          geographies.map((geo) => (
+            <Geography key={geo.rsmKey} geography={geo} />
+          ))
+        }
+      </Geographies>
+    </ComposableMap>
+  );
+}
