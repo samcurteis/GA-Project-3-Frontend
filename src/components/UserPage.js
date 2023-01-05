@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { API } from '../lib/api';
 import { useAuthenticated } from '../hooks/useAuthenticated';
 import { AUTH } from '../lib/auth';
-import CreateEntry from './CreateEntry';
+import CreateEntry from './common/CreateEntry';
 import ProfilePicture from './common/ProfilePicture';
 
 import {
@@ -30,7 +30,7 @@ export default function UserPage() {
       })
       .catch(({ message, response }) => {
         console.log(response);
-        console.log(message)
+        console.log(message);
       });
     setIsUpdated(false);
   }, [id, isUpdated]);
