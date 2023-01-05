@@ -78,7 +78,9 @@ export default function Login() {
             sx={{ mb: 2 }}
           />
         </div>
-        <Button type='submit'>Login</Button>
+        <Button type='submit' sx={{ color: '#3B3D40' }}>
+          Login
+        </Button>
       </form>
     </Container>
   );
