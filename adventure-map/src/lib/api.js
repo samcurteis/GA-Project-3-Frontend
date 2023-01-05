@@ -4,15 +4,14 @@ import { AUTH } from './auth';
 const ENDPOINTS = {
   allCountries: '/api/countries',
   singleCountry: (id) => `/api/countries/${id}`,
+  searchCountries: (query) => `/api/countries/search?search=${query}`,
   allEntries: (id) => `/api/entries`,
   singleEntry: (id) => `/api/entries/${id}`,
   allUsers: '/api/users',
   singleUser: (id) => `/api/users/${id}`,
+  searchUsers: (query) => `/api/users/search?search=${query}`,
   login: '/api/login',
   register: '/api/register',
-  searchCountries: (query) => `/api/countries/search?search=${query}`,
-  searchUsers: (query) => `/api/users/search?search=${query}`,
-  singleUser: (id) => `/api/users/${id}`,
   cloudinary: `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`
 };
 
