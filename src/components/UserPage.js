@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { API } from '../lib/api';
+import {AUTH} from '../lib/auth'
 import { useAuthenticated } from '../hooks/useAuthenticated';
 import CreateEntry from './common/CreateEntry';
 import ProfilePicture from './common/ProfilePicture'
@@ -41,7 +42,7 @@ export default function UserPage() {
           <ProfilePicture cloudinaryImageId={singleUser.cloudinaryImageId} />
         )}
           <CardActions>
-            {isLoggedIn && (
+            {isLoggedIn && AUTH.isOwner(singleUser?._id) && (
               <>
                 <Box>
                   <p> Visited somewhere recently?</p>
