@@ -21,10 +21,12 @@ export default function UserIndex() {
     setQuery(e.target.value);
   };
 
-  const handleClick = (id) => {
+  const handleClick = (e) => {
     setQuery('');
     setIsDropdownOpen(false);
-    navigate(`/users/${id}`);
+    // console.log(users.contains(id));
+    navigate(`/users/${e.target.id}`);
+    console.log('handleClick acivated');
   };
 
   useEffect(() => {
@@ -42,16 +44,14 @@ export default function UserIndex() {
       setIsDropdownOpen(false);
     }
 
-    if (query) {
-      console.log('value is ' + query);
-      API.POST(API.ENDPOINTS.searchUsers(query), {}, API.getHeaders())
-        .then(({ data }) => {
-          setSearchedUsers(data);
-          setIsDropdownOpen(true);
-        })
-        .catch((e) => console.log(e));
-    }
-  }, [query, searchedUsers]);
+    console.log('value is ' + query);
+    API.POST(API.ENDPOINTS.searchUsers(query), {}, API.getHeaders())
+      .then(({ data }) => {
+        setSearchedUsers(data);
+        setIsDropdownOpen(true);
+      })
+      .catch((e) => console.log(e));
+  }, [query]);
 
   useEffect(() => {
     setUsers(searchedUsers);
@@ -64,10 +64,7 @@ export default function UserIndex() {
         {isDropdownOpen && (
           <div>
             {searchedUsers.map((user) => (
-              <p
-                onClick={(e) => handleClick(e.target.innerText)}
-                key={user._id}
-              >
+              <p onClick={handleClick} key={user._id} id={user._id}>
                 {user.username}
               </p>
             ))}
