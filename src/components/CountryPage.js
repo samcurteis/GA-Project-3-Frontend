@@ -1,76 +1,83 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { API } from '../lib/api';
-import {AUTH} from '../lib/auth'
+import EntryCard from './common/EntryCard';
 import { useAuthenticated } from '../hooks/useAuthenticated';
 import CreateEntry from './common/CreateEntry';
-import ProfilePicture from './common/ProfilePicture'
-import EntryCard from './common/EntryCard';
 
 import {
   Container,
   Box,
   CardActions,
-  Button
+  CardContent,
+  Button,
+  Typography
 } from '@mui/material';
 
-export default function UserPage() {
+export default function CountryPage() {
   const [isLoggedIn] = useAuthenticated();
   const navigate = useNavigate();
   const { id } = useParams();
-  const [singleUser, setSingleUser] = useState(null);
+  const [singleCountry, setSingleCountry] = useState(null);
   const [isUpdated, setIsUpdated] = useState(false);
 
   useEffect(() => {
-    API.POST(API.ENDPOINTS.singleUser(id), {}, API.getHeaders())
+    API.GET(API.ENDPOINTS.singleCountry(id))
       .then(({ data }) => {
-        setSingleUser(data);
+        setSingleCountry(data);
       })
-      .catch(({ message, response }) => {
+      .catch(({ response }) => {
         console.log(response);
-        console.log(message);
       });
     setIsUpdated(false);
   }, [id, isUpdated]);
 
-  const goToMap = () => navigate('/');
+  const goToMap = () => navigate('/exploreworld');
 
-  console.log(singleUser)
+  console.log(singleCountry)
 
   return (
     <>
       <Container maxWidth='lg' sx={{ display: 'flex' }}>
         <Box>
-          {singleUser?.cloudinaryImageId && (
-            <ProfilePicture cloudinaryImageId={singleUser.cloudinaryImageId} />
-          )}
-          <CardActions>
-            {isLoggedIn && AUTH.isOwner(singleUser?._id) && (
-              <>
-                <Box>
-                  <p> Visited somewhere recently?</p>
-                  <CreateEntry />
-                </Box>
-              </>
+          <CardContent>
+            <Typography variant='h5' component='p'>
+              {singleCountry?.name}
+            </Typography>
+            {singleCountry && (
+              <img
+                loading='lazy'
+                width='20'
+                src={`https://flagcdn.com/w20/${singleCountry.code.toLowerCase()}.png`}
+                srcSet={`https://flagcdn.com/w40/${singleCountry.code.toLowerCase()}.png 2x`}
+                alt=''
+              />
             )}
+          </CardContent>
+          <CardActions>
+            {isLoggedIn && <CreateEntry />}
             <Button size='small' sx={{ color: '#3B3D40' }} onClick={goToMap}>
               Back to the Map!
             </Button>
           </CardActions>
+        </Box>
+      </Container>
+      {!!singleCountry?.entries.length && (
+        <Container maxWidth='lg'>
           <Box>
-            {singleUser?.entries?.map((entry) => (
+            {singleCountry?.entries?.map((entry) => (
               <EntryCard
                 key={entry._id}
                 text={entry.text}
-                addedBy={singleUser.username}
+                addedBy={entry.addedBy}
                 countryId={id}
                 entryId={entry._id}
                 setIsUpdated={setIsUpdated}
               />
             ))}
           </Box>
-        </Box>
-      </Container>
+        </Container>
+      )}
     </>
   );
 }

@@ -25,6 +25,7 @@ export default function Login() {
     API.POST(API.ENDPOINTS.login, formFields)
       .then(({ data }) => {
         AUTH.setToken(data.token);
+        console.log(data)
         navigate('/');
       })
       .catch((e) => {

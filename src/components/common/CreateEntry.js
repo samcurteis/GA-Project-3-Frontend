@@ -12,6 +12,8 @@ export default function CreateEntry() {
   });
   const [availableCountries, setAvailableCountries] = useState([]);
 
+  const [stateCountry, setStateCountry]=useState("")
+
   useEffect(() => {
     API.GET(API.ENDPOINTS.allCountries)
       .then(({ data }) => setAvailableCountries(data))
@@ -23,6 +25,11 @@ export default function CreateEntry() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const handleCountryChange = (e, value)=> {
+    setStateCountry(value)
+    setFormData({...formData, country: stateCountry._id})
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,6 +45,9 @@ export default function CreateEntry() {
       });
   };
 
+
+  // const listOfNames = availableCountries.map((country) => country.name);
+
   return (
     <Container
       maxWidth='lg'
@@ -50,9 +60,11 @@ export default function CreateEntry() {
             sx={{ width: 300 }}
             options={availableCountries}
             autoHighlight
-            getOptionLabel={(option) => option.label}
+            onChange={handleCountryChange}
+            getOptionLabel={(option) => option.name}
             renderOption={(props, option) => (
               <Box
+                value={option.name}
                 component='li'
                 sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
                 {...props}
@@ -64,7 +76,7 @@ export default function CreateEntry() {
                   srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
                   alt=''
                 />
-                {option.label} ({option.code}) +{option.phone}
+                {option.name}
               </Box>
             )}
             renderInput={(params) => (
@@ -81,7 +93,8 @@ export default function CreateEntry() {
         </Box>
         <Box sx={{ mb: 2 }}>
           <TextField
-            size='small'
+            sx={{ width: 300 }}
+            size='medium'
             type='text'
             value={formData.text}
             onChange={handleChange}
@@ -90,7 +103,9 @@ export default function CreateEntry() {
             name='text'
           />
         </Box>
-        <Button type='submit'>ADD MY VISIT</Button>
+        <Button type='submit' sx={{ color: '#3B3D40' }}>
+          ADD MY VISIT
+        </Button>
       </form>
     </Container>
   );
