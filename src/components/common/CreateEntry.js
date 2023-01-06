@@ -23,7 +23,6 @@ export default function CreateEntry() {
   const [error, setError] = useState(false);
 
   const handleChange = (e) => {
-    console.log(e.target.value)
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -34,7 +33,6 @@ export default function CreateEntry() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData)
     API.POST(API.ENDPOINTS.allEntries, formData, API.getHeaders())
       .then(({ data }) => {
         navigate(`/users/${data.addedBy}`);
