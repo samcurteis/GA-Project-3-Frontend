@@ -38,6 +38,8 @@ export default function CreateEntry() {
       });
   };
 
+  // const listOfNames = availableCountries.map((country) => country.name);
+
   return (
     <Container
       maxWidth='lg'
@@ -51,32 +53,41 @@ export default function CreateEntry() {
             options={availableCountries}
             autoHighlight
             getOptionLabel={(option) => option.name}
-            renderOption={(props, option) => (
-              <Box
-                component='li'
-                sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-                {...props}
-              >
-                <img
-                  loading='lazy'
-                  width='20'
-                  src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                  srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                  alt=''
+            renderOption={(props, option) => {
+              // console.log(option);
+
+              return (
+                <Box
+                  component='li'
+                  sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
+                  {...props}
+                  onChange={handleChange}
+                >
+                  <img
+                    loading='lazy'
+                    width='20'
+                    src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                    srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                    alt=''
+                  />
+                  {option.name}
+                </Box>
+              );
+            }}
+            renderInput={(params) => {
+              console.log(params);
+
+              return (
+                <TextField
+                  {...params}
+                  label='Choose a country'
+                  inputProps={{
+                    ...params.inputProps,
+                    autoComplete: 'new-password' // disable autocomplete and autofill
+                  }}
                 />
-                {option.name}
-              </Box>
-            )}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label='Choose a country'
-                inputProps={{
-                  ...params.inputProps,
-                  autoComplete: 'new-password' // disable autocomplete and autofill
-                }}
-              />
-            )}
+              );
+            }}
           />
         </Box>
         <Box sx={{ mb: 2 }}>
@@ -90,7 +101,9 @@ export default function CreateEntry() {
             name='text'
           />
         </Box>
-        <Button type='submit'>ADD MY VISIT</Button>
+        <Button type='submit' sx={{ color: '#3B3D40' }}>
+          ADD MY VISIT
+        </Button>
       </form>
     </Container>
   );

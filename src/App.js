@@ -8,6 +8,7 @@ import Login from './components/Login';
 import Navbar from './components/Navbar';
 import UserPage from './components/UserPage';
 import UserIndex from './components/UserIndex';
+import CountryPage from './components/CountryPage';
 
 import './App.css';
 
@@ -27,6 +28,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/users' element={<UserIndex />} />
           <Route path='/users/:id' element={<UserPage />} />
+          <Route path='/countries/:id' element={<CountryPage />} />
         </Routes>
       </Router>
     </div>
