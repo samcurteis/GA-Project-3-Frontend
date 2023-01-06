@@ -32,7 +32,6 @@ export default function UserPage() {
   }, [id, isUpdated]);
 
   const goToMap = () => navigate('/');
-  console.log(singleUser)
 
   return (
     <>
