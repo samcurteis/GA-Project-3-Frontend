@@ -1,45 +1,67 @@
+import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { API } from '../lib/api';
 
-// import { Container, Grid } from '@mui/material';
+import { Container, Grid, TextField, Autocomplete } from '@mui/material';
+import { createFilterOptions } from '@mui/material/Autocomplete';
 
-// import UserCard from './common/UserCard.js';
+import UserCard from './common/UserCard.js';
+
+const filter = createFilterOptions();
 
 export default function UserIndex() {
-  const [users, setUsers] = useState(null);
+  const navigate = useNavigate();
+  const [searchedUsers, setSearchedUsers] = useState([]);
+  const [users, setUsers] = useState(searchedUsers);
+  const [query, setQuery] = useState('');
+
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+  };
 
   useEffect(() => {
-    API.GET(API.ENDPOINTS.allUsers, API.getHeaders())
+    API.POST(API.ENDPOINTS.allUsers, {}, API.getHeaders())
       .then(({ data }) => {
         setUsers(data);
-        console.log(data);
       })
       .catch(({ message, response }) => {
         console.error(message, response);
       });
   }, []);
 
-  console.log(users);
+  useEffect(() => {
+    if (query) {
+      console.log('value is ' + query);
+      API.POST(API.ENDPOINTS.searchUsers(query), {}, API.getHeaders())
+        .then(({ data }) => {
+          setSearchedUsers(data);
+        })
+        .catch((e) => console.log(e));
+    }
+  }, [query, searchedUsers]);
 
-  // useEffect(() => {
-  //   setUsers(searchedUsers);
-  // }, [searchedUsers]);
+  useEffect(() => {
+    setUsers(searchedUsers);
+  }, [searchedUsers]);
 
   return (
-    // <Container maxWidth='lg'>
-    //   <Grid container spacing={2}>
-    //     {users?.map((user) => (
-    //       <Grid item xs={4} key={user._id}>
-    //         <UserCard
-    //           username={user.username}
-    //           cloudinaryImageId={user.cloudinaryImageId}
-    //           id={user._id}
-    //           entries={user.entries}
-    //         />
-    //       </Grid>
-    //     ))}
-    //   </Grid>
-    // </Container>
-    <div> user index page </div>
+    <Container maxWidth='lg'>
+      <div>
+        <TextField value={query} onChange={handleChange} label='Search users' />
+      </div>
+      <Grid container spacing={2}>
+        {users?.map((user) => (
+          <Grid item xs={4} key={user._id}>
+            <UserCard
+              username={user.username}
+              cloudinaryImageId={user.cloudinaryImageId}
+              id={user._id}
+              entries={user.entries}
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 }

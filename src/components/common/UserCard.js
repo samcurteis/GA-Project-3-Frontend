@@ -42,13 +42,13 @@ export default function UserCard({ username, cloudinaryImageId, id, entries }) {
           <Typography gutterBottom variant='h5' component='div'>
             {username}
           </Typography>
-          {entries.length === 1 ? (
+          {entries?.length === 1 ? (
             <Typography variant='body2' color='text.secondary'>
-              {entries.length} country visited
+              1 country visited
             </Typography>
           ) : (
             <Typography variant='body2' color='text.secondary'>
-              {entries.length} countries visited
+              {entries?.length} countries visited
             </Typography>
           )}
         </CardContent>
