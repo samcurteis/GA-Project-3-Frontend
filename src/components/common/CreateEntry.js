@@ -21,11 +21,13 @@ export default function CreateEntry() {
   const [error, setError] = useState(false);
 
   const handleChange = (e) => {
+    console.log(e.target)
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(formData)
     API.POST(API.ENDPOINTS.allEntries, formData, API.getHeaders())
       .then(({ data }) => {
         navigate(`/users/${data.addedBy}`);
@@ -37,6 +39,7 @@ export default function CreateEntry() {
         console.log(e);
       });
   };
+
 
   // const listOfNames = availableCountries.map((country) => country.name);
 
@@ -52,9 +55,11 @@ export default function CreateEntry() {
             sx={{ width: 300 }}
             options={availableCountries}
             autoHighlight
+            onChange={handleChange}
             getOptionLabel={(option) => option.name}
             renderOption={(props, option) => (
               <Box
+              value={formData.country}
                 component='li'
                 sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
                 {...props}
@@ -83,7 +88,8 @@ export default function CreateEntry() {
         </Box>
         <Box sx={{ mb: 2 }}>
           <TextField
-            size='small'
+            sx={{ width: 300 }}
+            size='medium'
             type='text'
             value={formData.text}
             onChange={handleChange}

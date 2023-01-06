@@ -33,14 +33,13 @@ export default function CountryPage() {
     setIsUpdated(false);
   }, [id, isUpdated]);
 
-  const goToMap = () => navigate('/');
+  const goToMap = () => navigate('/exploreworld');
 
-const userHasReviewed = useMemo(() => {
-  return singleCountry?.entries
-    .map((entry) => entry.user._id)
-    .some((id) => AUTH.isOwner(id));
-}, [singleCountry]);
-
+  const userHasReviewed = useMemo(() => {
+    return singleCountry?.entries
+      .map((entry) => entry.user._id)
+      .some((id) => AUTH.isOwner(id));
+  }, [singleCountry]);
 
   return (
     <>
@@ -50,6 +49,15 @@ const userHasReviewed = useMemo(() => {
             <Typography variant='h5' component='p'>
               {singleCountry?.name}
             </Typography>
+            {singleCountry &&
+            <img
+              loading='lazy'
+              width='20'
+              src={`https://flagcdn.com/w20/${singleCountry.code.toLowerCase()}.png`}
+              srcSet={`https://flagcdn.com/w40/${singleCountry.code.toLowerCase()}.png 2x`}
+              alt=''
+            />
+            }
           </CardContent>
           <CardActions>
             {isLoggedIn && !userHasReviewed && <CreateEntry />}
@@ -78,4 +86,3 @@ const userHasReviewed = useMemo(() => {
     </>
   );
 }
-
