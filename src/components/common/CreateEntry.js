@@ -62,6 +62,7 @@ export default function CreateEntry() {
                   sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
                   {...props}
                   onChange={handleChange}
+                  id={option._id}
                 >
                   <img
                     loading='lazy'
