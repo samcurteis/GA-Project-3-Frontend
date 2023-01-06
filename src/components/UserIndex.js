@@ -1,14 +1,11 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { API } from '../lib/api';
 
-import { Container, Grid, TextField, Autocomplete } from '@mui/material';
-import { createFilterOptions } from '@mui/material/Autocomplete';
+import { Container, Grid, TextField } from '@mui/material';
 
 import UserCard from './common/UserCard.js';
-
-const filter = createFilterOptions();
 
 export default function UserIndex() {
   const navigate = useNavigate();

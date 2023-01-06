@@ -21,11 +21,19 @@ export default function CreateEntry() {
   const [error, setError] = useState(false);
 
   const handleChange = (e) => {
+    console.log(e.target);
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleCountryChange = (e) => {
+    console.log(e.target.id);
+    setFormData({ ...formData, country: e.target.value });
+    console.log(formData);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(formData);
     API.POST(API.ENDPOINTS.allEntries, formData, API.getHeaders())
       .then(({ data }) => {
         navigate(`/users/${data.addedBy}`);
@@ -52,48 +60,42 @@ export default function CreateEntry() {
             sx={{ width: 300 }}
             options={availableCountries}
             autoHighlight
+            onChange={handleCountryChange}
             getOptionLabel={(option) => option.name}
-            renderOption={(props, option) => {
-              // console.log(option);
-
-              return (
-                <Box
-                  component='li'
-                  sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-                  {...props}
-                  onChange={handleChange}
-                  id={option._id}
-                >
-                  <img
-                    loading='lazy'
-                    width='20'
-                    src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                    srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                    alt=''
-                  />
-                  {option.name}
-                </Box>
-              );
-            }}
-            renderInput={(params) => {
-              console.log(params);
-
-              return (
-                <TextField
-                  {...params}
-                  label='Choose a country'
-                  inputProps={{
-                    ...params.inputProps,
-                    autoComplete: 'new-password' // disable autocomplete and autofill
-                  }}
+            renderOption={(props, option) => (
+              <Box
+                value={formData.country}
+                component='li'
+                sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
+                {...props}
+                id={option._id}
+              >
+                <img
+                  loading='lazy'
+                  width='20'
+                  src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                  srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                  alt=''
                 />
-              );
-            }}
+                {option.name}
+              </Box>
+            )}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label='Choose a country'
+                inputProps={{
+                  ...params.inputProps,
+                  autoComplete: 'new-password' // disable autocomplete and autofill
+                }}
+              />
+            )}
           />
         </Box>
         <Box sx={{ mb: 2 }}>
           <TextField
-            size='small'
+            sx={{ width: 300 }}
+            size='medium'
             type='text'
             value={formData.text}
             onChange={handleChange}
