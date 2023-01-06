@@ -52,7 +52,6 @@ export default function EntryCard({
       .catch((e) => console.log(e));
   };
 
-
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -78,9 +77,9 @@ export default function EntryCard({
           </Typography>
         )}
       </CardContent>
-      {(AUTH.isOwner(addedBy._id) || AUTH.getPayload().isAdmin) && (
+      {(AUTH.isOwner(addedBy) || AUTH.getPayload().isAdmin) && (
         <CardActions>
-          {AUTH.isOwner(addedBy._id) && (
+          {AUTH.isOwner(addedBy) && (
             <Button
               size='small'
               sx={{ color: '#3B3D40' }}

@@ -62,7 +62,7 @@ export default function UserPage() {
               <EntryCard
                 key={entry._id}
                 text={entry.text}
-                addedBy={entry.addedBy}
+                addedBy={singleUser.username}
                 countryId={id}
                 entryId={entry._id}
                 setIsUpdated={setIsUpdated}
