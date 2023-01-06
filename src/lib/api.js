@@ -5,7 +5,7 @@ const ENDPOINTS = {
   allCountries: '/api/countries',
   singleCountry: (id) => `/api/countries/${id}`,
   searchCountries: (query) => `/api/countries/search?search=${query}`,
-  allEntries: (id) => `/api/entries`,
+  allEntries: `/api/entries`,
   singleEntry: (id) => `/api/entries/${id}`,
   allUsers: '/api/users',
   singleUser: (id) => `/api/users/${id}`,
