@@ -21,7 +21,7 @@ export default function CreateEntry() {
   const [error, setError] = useState(false);
 
   const handleChange = (e) => {
-    console.log(e.target)
+    console.log(e.target.value)
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -59,7 +59,7 @@ export default function CreateEntry() {
             getOptionLabel={(option) => option.name}
             renderOption={(props, option) => (
               <Box
-              value={formData.country}
+                value={option.name}
                 component='li'
                 sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
                 {...props}
