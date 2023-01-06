@@ -64,7 +64,7 @@ export default function EntryCard({
           color='text.secondary'
           gutterBottom
         >
-          Added by {addedBy.username}:
+          Added by {addedBy}:
         </Typography>
         {isEditMode ? (
           <TextareaAutosize

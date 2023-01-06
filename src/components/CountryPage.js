@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { API } from '../lib/api';
 import EntryCard from './common/EntryCard';
 import { useAuthenticated } from '../hooks/useAuthenticated';
-import { AUTH } from '../lib/auth';
 import CreateEntry from './common/CreateEntry';
 
 import {
@@ -35,12 +34,6 @@ export default function CountryPage() {
 
   const goToMap = () => navigate('/exploreworld');
 
-  const userHasReviewed = useMemo(() => {
-    return singleCountry?.entries
-      .map((entry) => entry.user._id)
-      .some((id) => AUTH.isOwner(id));
-  }, [singleCountry]);
-
   return (
     <>
       <Container maxWidth='lg' sx={{ display: 'flex' }}>
@@ -49,18 +42,18 @@ export default function CountryPage() {
             <Typography variant='h5' component='p'>
               {singleCountry?.name}
             </Typography>
-            {singleCountry &&
-            <img
-              loading='lazy'
-              width='20'
-              src={`https://flagcdn.com/w20/${singleCountry.code.toLowerCase()}.png`}
-              srcSet={`https://flagcdn.com/w40/${singleCountry.code.toLowerCase()}.png 2x`}
-              alt=''
-            />
-            }
+            {singleCountry && (
+              <img
+                loading='lazy'
+                width='20'
+                src={`https://flagcdn.com/w20/${singleCountry.code.toLowerCase()}.png`}
+                srcSet={`https://flagcdn.com/w40/${singleCountry.code.toLowerCase()}.png 2x`}
+                alt=''
+              />
+            )}
           </CardContent>
           <CardActions>
-            {isLoggedIn && !userHasReviewed && <CreateEntry />}
+            {isLoggedIn && <CreateEntry />}
             <Button size='small' sx={{ color: '#3B3D40' }} onClick={goToMap}>
               Back to the Map!
             </Button>

@@ -12,6 +12,8 @@ export default function CreateEntry() {
   });
   const [availableCountries, setAvailableCountries] = useState([]);
 
+  const [stateCountry, setStateCountry]=useState("")
+
   useEffect(() => {
     API.GET(API.ENDPOINTS.allCountries)
       .then(({ data }) => setAvailableCountries(data))
@@ -21,9 +23,14 @@ export default function CreateEntry() {
   const [error, setError] = useState(false);
 
   const handleChange = (e) => {
-    console.log(e.target)
+    console.log(e.target.value)
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const handleCountryChange = (e, value)=> {
+    setStateCountry(value)
+    setFormData({...formData, country: stateCountry._id})
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -55,11 +62,11 @@ export default function CreateEntry() {
             sx={{ width: 300 }}
             options={availableCountries}
             autoHighlight
-            onChange={handleChange}
+            onChange={handleCountryChange}
             getOptionLabel={(option) => option.name}
             renderOption={(props, option) => (
               <Box
-              value={formData.country}
+                value={option.name}
                 component='li'
                 sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
                 {...props}
@@ -71,7 +78,7 @@ export default function CreateEntry() {
                   srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
                   alt=''
                 />
-                ({option.code}) + {option.name}
+                {option.name}
               </Box>
             )}
             renderInput={(params) => (
