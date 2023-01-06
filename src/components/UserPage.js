@@ -5,6 +5,7 @@ import {AUTH} from '../lib/auth'
 import { useAuthenticated } from '../hooks/useAuthenticated';
 import CreateEntry from './common/CreateEntry';
 import ProfilePicture from './common/ProfilePicture'
+import EntryCard from './common/EntryCard';
 
 import {
   Container,
@@ -34,13 +35,15 @@ export default function UserPage() {
 
   const goToMap = () => navigate('/');
 
+  console.log(singleUser)
+
   return (
     <>
       <Container maxWidth='lg' sx={{ display: 'flex' }}>
         <Box>
-        {singleUser?.cloudinaryImageId && (
-          <ProfilePicture cloudinaryImageId={singleUser.cloudinaryImageId} />
-        )}
+          {singleUser?.cloudinaryImageId && (
+            <ProfilePicture cloudinaryImageId={singleUser.cloudinaryImageId} />
+          )}
           <CardActions>
             {isLoggedIn && AUTH.isOwner(singleUser?._id) && (
               <>
@@ -54,6 +57,18 @@ export default function UserPage() {
               Back to the Map!
             </Button>
           </CardActions>
+          <Box>
+            {singleUser?.entries?.map((entry) => (
+              <EntryCard
+                key={entry._id}
+                text={entry.text}
+                addedBy={entry.addedBy}
+                countryId={id}
+                entryId={entry._id}
+                setIsUpdated={setIsUpdated}
+              />
+            ))}
+          </Box>
         </Box>
       </Container>
     </>
