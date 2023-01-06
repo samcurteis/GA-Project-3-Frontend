@@ -12,6 +12,8 @@ export default function CreateEntry() {
   });
   const [availableCountries, setAvailableCountries] = useState([]);
 
+  const [stateCountry, setStateCountry]=useState("")
+
   useEffect(() => {
     API.GET(API.ENDPOINTS.allCountries)
       .then(({ data }) => setAvailableCountries(data))
@@ -21,6 +23,7 @@ export default function CreateEntry() {
   const [error, setError] = useState(false);
 
   const handleChange = (e) => {
+<<<<<<< HEAD
     console.log(e.target);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -30,6 +33,16 @@ export default function CreateEntry() {
     setFormData({ ...formData, country: e.target.value });
     console.log(formData);
   };
+=======
+    console.log(e.target.value)
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleCountryChange = (e, value)=> {
+    setStateCountry(value)
+    setFormData({...formData, country: stateCountry._id})
+  }
+>>>>>>> development
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,7 +77,11 @@ export default function CreateEntry() {
             getOptionLabel={(option) => option.name}
             renderOption={(props, option) => (
               <Box
+<<<<<<< HEAD
                 value={formData.country}
+=======
+                value={option.name}
+>>>>>>> development
                 component='li'
                 sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
                 {...props}
