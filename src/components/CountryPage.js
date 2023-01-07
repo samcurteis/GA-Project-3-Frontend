@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { API } from '../lib/api';
-import EntryCard from './common/EntryCard';
-import { useAuthenticated } from '../hooks/useAuthenticated';
-import CreateEntry from './common/CreateEntry';
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { API } from "../lib/api";
+import EntryCard from "./common/EntryCard";
+import { useAuthenticated } from "../hooks/useAuthenticated";
+import CreateEntry from "./common/CreateEntry";
 
 import {
   Container,
@@ -11,8 +11,8 @@ import {
   CardActions,
   CardContent,
   Button,
-  Typography
-} from '@mui/material';
+  Typography,
+} from "@mui/material";
 
 export default function CountryPage() {
   const [isLoggedIn] = useAuthenticated();
@@ -32,38 +32,38 @@ export default function CountryPage() {
     setIsUpdated(false);
   }, [id, isUpdated]);
 
-  const goToMap = () => navigate('/exploreworld');
+  const goToMap = () => navigate("/exploreworld");
 
-  console.log(singleCountry)
+  console.log(singleCountry);
 
   return (
     <>
-      <Container maxWidth='lg' sx={{ display: 'flex' }}>
+      <Container maxWidth="lg" sx={{ display: "flex" }}>
         <Box>
           <CardContent>
-            <Typography variant='h5' component='p'>
+            <Typography variant="h5" component="p">
               {singleCountry?.name}
             </Typography>
             {singleCountry && (
               <img
-                loading='lazy'
-                width='20'
+                loading="lazy"
+                width="20"
                 src={`https://flagcdn.com/w20/${singleCountry.code.toLowerCase()}.png`}
                 srcSet={`https://flagcdn.com/w40/${singleCountry.code.toLowerCase()}.png 2x`}
-                alt=''
+                alt=""
               />
             )}
           </CardContent>
           <CardActions>
             {isLoggedIn && <CreateEntry />}
-            <Button size='small' sx={{ color: '#3B3D40' }} onClick={goToMap}>
-              Back to the Map!
+            <Button size="small" sx={{ color: "#3B3D40" }} onClick={goToMap}>
+              Back to the Maps!
             </Button>
           </CardActions>
         </Box>
       </Container>
       {!!singleCountry?.entries.length && (
-        <Container maxWidth='lg'>
+        <Container maxWidth="lg">
           <Box>
             {singleCountry?.entries?.map((entry) => (
               <EntryCard

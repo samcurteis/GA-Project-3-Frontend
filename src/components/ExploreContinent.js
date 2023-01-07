@@ -47,8 +47,8 @@ export default function Home() {
       });
   }, []);
 
+  console.log(countries);
   const navigateToCountry = (geo) => {
-    console.log(geo.properties.geounit);
     for (var i = 0; i < countries.length; i++) {
       if (geo.properties.geounit === countries[i].name) {
         navigate(`/countries/${countries[i]._id}`);
