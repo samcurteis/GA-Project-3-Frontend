@@ -13,7 +13,7 @@ import {
 import { geoCentroid } from 'd3-geo';
 
 import { continentsGeoURL } from '../mapping/continents.js';
-// import "../styles/styles.scss";
+import './styles/styles.scss';
 
 //TODO tool tip by mouse
 //TODO label countries
