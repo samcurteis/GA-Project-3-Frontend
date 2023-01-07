@@ -69,12 +69,8 @@ export default function CountryPage() {
               <img
                 loading='lazy'
                 width='20'
-                src={`https://flagcdn.com/w20/${singleCountry.code.toLowerCase(
-                  singleCountry.code
-                )}.png`}
-                srcSet={`https://flagcdn.com/w40/${singleCountry.code.toLowerCase(
-                  singleCountry.code
-                )}.png 2x`}
+                src={`https://flagcdn.com/w20/${singleCountry.code.toLowerCase()}.png`}
+                srcSet={`https://flagcdn.com/w40/${singleCountry.code.toLowerCase()}.png 2x`}
                 alt=''
               />
             )}
