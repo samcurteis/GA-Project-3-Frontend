@@ -34,6 +34,8 @@ export default function CountryPage() {
 
   const goToMap = () => navigate('/exploreworld');
 
+  console.log(singleCountry)
+
   return (
     <>
       <Container maxWidth='lg' sx={{ display: 'flex' }}>

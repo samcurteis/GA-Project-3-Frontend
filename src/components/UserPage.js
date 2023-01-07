@@ -59,6 +59,7 @@ export default function UserPage() {
                 text={entry.text}
                 addedBy={null}
                 CountryName={entry.country.name}
+                countryId={id}
                 entryId={entry._id}
                 setIsUpdated={setIsUpdated}
               />
