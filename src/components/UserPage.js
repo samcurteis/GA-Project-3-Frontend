@@ -30,8 +30,6 @@ export default function UserPage() {
 
   const goToMap = () => navigate('/');
 
-  console.log(singleUser);
-
   return (
     <>
       <Container maxWidth='lg' sx={{ display: 'flex' }}>
@@ -53,17 +51,21 @@ export default function UserPage() {
             </Button>
           </CardActions>
           <Box>
-            {singleUser?.entries?.map((entry) => (
-              <EntryCard
-                key={entry._id}
-                text={entry.text}
-                addedBy={null}
-                CountryName={entry.country.name}
-                countryId={id}
-                entryId={entry._id}
-                setIsUpdated={setIsUpdated}
-              />
-            ))}
+            {singleUser?.entries?.map((entry) => {
+              // console.log(entry.country);
+
+              return (
+                <EntryCard
+                  key={entry._id}
+                  text={entry.text}
+                  addedBy={null}
+                  country={entry.country}
+                  countryId={id}
+                  entryId={entry._id}
+                  setIsUpdated={setIsUpdated}
+                />
+              );
+            })}
           </Box>
         </Box>
       </Container>
