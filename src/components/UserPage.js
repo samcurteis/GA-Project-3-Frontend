@@ -1,18 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { API } from '../lib/api';
-import {AUTH} from '../lib/auth'
+import { AUTH } from '../lib/auth';
 import { useAuthenticated } from '../hooks/useAuthenticated';
 import CreateEntry from './common/CreateEntry';
-import ProfilePicture from './common/ProfilePicture'
+import ProfilePicture from './common/ProfilePicture';
 import EntryCard from './common/EntryCard';
 
-import {
-  Container,
-  Box,
-  CardActions,
-  Button
-} from '@mui/material';
+import { Container, Box, CardActions, Button } from '@mui/material';
 
 export default function UserPage() {
   const [isLoggedIn] = useAuthenticated();
@@ -35,8 +30,6 @@ export default function UserPage() {
 
   const goToMap = () => navigate('/');
 
-  console.log(singleUser)
-
   return (
     <>
       <Container maxWidth='lg' sx={{ display: 'flex' }}>
@@ -58,16 +51,21 @@ export default function UserPage() {
             </Button>
           </CardActions>
           <Box>
-            {singleUser?.entries?.map((entry) => (
-              <EntryCard
-                key={entry._id}
-                text={entry.text}
-                addedBy={singleUser.username}
-                countryId={id}
-                entryId={entry._id}
-                setIsUpdated={setIsUpdated}
-              />
-            ))}
+            {singleUser?.entries?.map((entry) => {
+              // console.log(entry.country);
+
+              return (
+                <EntryCard
+                  key={entry._id}
+                  text={entry.text}
+                  addedBy={null}
+                  country={entry.country}
+                  countryId={id}
+                  entryId={entry._id}
+                  setIsUpdated={setIsUpdated}
+                />
+              );
+            })}
           </Box>
         </Box>
       </Container>

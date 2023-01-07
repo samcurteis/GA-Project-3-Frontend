@@ -12,7 +12,7 @@ export default function CreateEntry() {
   });
   const [availableCountries, setAvailableCountries] = useState([]);
 
-  const [stateCountry, setStateCountry]=useState("")
+  const [stateCountry, setStateCountry] = useState('');
 
   useEffect(() => {
     API.GET(API.ENDPOINTS.allCountries)
@@ -26,10 +26,10 @@ export default function CreateEntry() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleCountryChange = (e, value)=> {
-    setStateCountry(value)
-    setFormData({...formData, country: stateCountry._id})
-  }
+  const handleCountryChange = (e, value) => {
+    setStateCountry(value);
+    setFormData({ ...formData, country: stateCountry._id });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,7 +44,6 @@ export default function CreateEntry() {
         console.log(e);
       });
   };
-
 
   // const listOfNames = availableCountries.map((country) => country.name);
 
@@ -68,6 +67,7 @@ export default function CreateEntry() {
                 component='li'
                 sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
                 {...props}
+                id={option._id}
               >
                 <img
                   loading='lazy'
