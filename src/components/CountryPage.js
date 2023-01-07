@@ -57,7 +57,7 @@ export default function CountryPage() {
           <CardActions>
             {isLoggedIn && <CreateEntry />}
             <Button size="small" sx={{ color: "#3B3D40" }} onClick={goToMap}>
-              Back to the Maps!
+              Back to the Map!
             </Button>
           </CardActions>
         </Box>
