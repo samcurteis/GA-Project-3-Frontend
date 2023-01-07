@@ -14,6 +14,7 @@ import ProfilePicture from './ProfilePicture';
 export default function EntryCard({
   text,
   addedBy,
+  countryName,
   countryId,
   entryId,
   setIsUpdated
@@ -52,20 +53,29 @@ export default function EntryCard({
       .catch((e) => console.log(e));
   };
 
-
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
-        {addedBy.cloudinaryImageId && (
+        {/* {addedBy.cloudinaryImageId && (
           <ProfilePicture cloudinaryImageId={addedBy.cloudinaryImageId} />
+        )} */}
+        {addedBy ? (
+          <Typography
+            sx={{ fontSize: 14, textTransform: 'capitalize' }}
+            color='text.secondary'
+            gutterBottom
+          >
+            Added by {addedBy}:
+          </Typography>
+        ) : (
+          <Typography
+            sx={{ fontSize: 14, textTransform: 'capitalize' }}
+            color='text.secondary'
+            gutterBottom
+          >
+            {countryName}:
+          </Typography>
         )}
-        <Typography
-          sx={{ fontSize: 14, textTransform: 'capitalize' }}
-          color='text.secondary'
-          gutterBottom
-        >
-          Added by {addedBy}:
-        </Typography>
         {isEditMode ? (
           <TextareaAutosize
             value={entryText}
@@ -78,9 +88,9 @@ export default function EntryCard({
           </Typography>
         )}
       </CardContent>
-      {(AUTH.isOwner(addedBy._id) || AUTH.getPayload().isAdmin) && (
+      {(AUTH.isOwner(addedBy) || AUTH.getPayload().isAdmin) && (
         <CardActions>
-          {AUTH.isOwner(addedBy._id) && (
+          {AUTH.isOwner(addedBy) && (
             <Button
               size='small'
               sx={{ color: '#3B3D40' }}

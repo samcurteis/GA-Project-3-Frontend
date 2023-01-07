@@ -12,7 +12,7 @@ export default function CreateEntry() {
   });
   const [availableCountries, setAvailableCountries] = useState([]);
 
-  const [stateCountry, setStateCountry]=useState("")
+  const [stateCountry, setStateCountry] = useState('');
 
   useEffect(() => {
     API.GET(API.ENDPOINTS.allCountries)
@@ -23,30 +23,16 @@ export default function CreateEntry() {
   const [error, setError] = useState(false);
 
   const handleChange = (e) => {
-<<<<<<< HEAD
-    console.log(e.target);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleCountryChange = (e) => {
-    console.log(e.target.id);
-    setFormData({ ...formData, country: e.target.value });
-    console.log(formData);
+  const handleCountryChange = (e, value) => {
+    setStateCountry(value);
+    setFormData({ ...formData, country: stateCountry._id });
   };
-=======
-    console.log(e.target.value)
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleCountryChange = (e, value)=> {
-    setStateCountry(value)
-    setFormData({...formData, country: stateCountry._id})
-  }
->>>>>>> development
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
     API.POST(API.ENDPOINTS.allEntries, formData, API.getHeaders())
       .then(({ data }) => {
         navigate(`/users/${data.addedBy}`);
@@ -77,11 +63,7 @@ export default function CreateEntry() {
             getOptionLabel={(option) => option.name}
             renderOption={(props, option) => (
               <Box
-<<<<<<< HEAD
-                value={formData.country}
-=======
                 value={option.name}
->>>>>>> development
                 component='li'
                 sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
                 {...props}

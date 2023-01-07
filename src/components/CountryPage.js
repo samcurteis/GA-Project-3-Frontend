@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { API } from '../lib/api';
 import EntryCard from './common/EntryCard';
@@ -67,7 +67,7 @@ export default function CountryPage() {
               <EntryCard
                 key={entry._id}
                 text={entry.text}
-                addedBy={entry.addedBy}
+                addedBy={entry.addedBy.username}
                 countryId={id}
                 entryId={entry._id}
                 setIsUpdated={setIsUpdated}

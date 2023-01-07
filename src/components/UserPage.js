@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { API } from '../lib/api';
-import {AUTH} from '../lib/auth'
+import { AUTH } from '../lib/auth';
 import { useAuthenticated } from '../hooks/useAuthenticated';
 import CreateEntry from './common/CreateEntry';
-import ProfilePicture from './common/ProfilePicture'
+import ProfilePicture from './common/ProfilePicture';
+import EntryCard from './common/EntryCard';
 
-import {
-  Container,
-  Box,
-  CardActions,
-  Button
-} from '@mui/material';
+import { Container, Box, CardActions, Button } from '@mui/material';
 
 export default function UserPage() {
   const [isLoggedIn] = useAuthenticated();
@@ -34,13 +30,15 @@ export default function UserPage() {
 
   const goToMap = () => navigate('/');
 
+  console.log(singleUser);
+
   return (
     <>
       <Container maxWidth='lg' sx={{ display: 'flex' }}>
         <Box>
-        {singleUser?.cloudinaryImageId && (
-          <ProfilePicture cloudinaryImageId={singleUser.cloudinaryImageId} />
-        )}
+          {singleUser?.cloudinaryImageId && (
+            <ProfilePicture cloudinaryImageId={singleUser.cloudinaryImageId} />
+          )}
           <CardActions>
             {isLoggedIn && AUTH.isOwner(singleUser?._id) && (
               <>
@@ -54,6 +52,18 @@ export default function UserPage() {
               Back to the Map!
             </Button>
           </CardActions>
+          <Box>
+            {singleUser?.entries?.map((entry) => (
+              <EntryCard
+                key={entry._id}
+                text={entry.text}
+                addedBy={null}
+                CountryName={entry.country.name}
+                entryId={entry._id}
+                setIsUpdated={setIsUpdated}
+              />
+            ))}
+          </Box>
         </Box>
       </Container>
     </>
