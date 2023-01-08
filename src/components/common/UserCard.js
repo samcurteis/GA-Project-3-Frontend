@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -20,6 +21,7 @@ import { FocusOn } from '@cloudinary/url-gen/qualifiers/focusOn';
 export default function UserCard({ username, cloudinaryImageId, id, entries }) {
   const navigate = useNavigate();
   const navigateToUser = () => navigate(`/users/${id}`);
+  const [userImage, setUserImage] = useState(cloudinaryImageId);
 
   const cld = new Cloudinary({
     cloud: {
@@ -27,8 +29,12 @@ export default function UserCard({ username, cloudinaryImageId, id, entries }) {
     }
   });
 
+  if (!userImage) {
+    setUserImage('xyfrkvpysclpv4wbxzm7');
+  }
+
   // Use the image with public ID, 'front_face'.
-  const myImage = cld.image(cloudinaryImageId);
+  const myImage = cld.image(userImage);
 
   // Apply the transformation.
   myImage.resize(thumbnail().width(345).gravity(focusOn(FocusOn.face()))); // Crop the image, focusing on the face.

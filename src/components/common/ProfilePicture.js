@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from '@cloudinary/url-gen';
 
@@ -9,6 +10,7 @@ import { focusOn } from '@cloudinary/url-gen/qualifiers/gravity';
 import { FocusOn } from '@cloudinary/url-gen/qualifiers/focusOn';
 
 export default function ProfilePicture({ cloudinaryImageId }) {
+  const [userImage, setUserImage] = useState(cloudinaryImageId);
   // Create and configure your Cloudinary instance.
   const cld = new Cloudinary({
     cloud: {
@@ -16,8 +18,12 @@ export default function ProfilePicture({ cloudinaryImageId }) {
     }
   });
 
+  if (!userImage) {
+    setUserImage('xyfrkvpysclpv4wbxzm7');
+  }
+
   // Use the image with public ID, 'front_face'.
-  const myImage = cld.image(cloudinaryImageId);
+  const myImage = cld.image(userImage);
 
   // Apply the transformation.
   myImage
