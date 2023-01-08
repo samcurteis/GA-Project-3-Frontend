@@ -1,23 +1,12 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { API } from "../lib/api.js";
 
-=======
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-
-import { API } from '../lib/api.js';
-
-import { Tooltip } from 'react-tooltip';
->>>>>>> development
 import {
   ComposableMap,
   Geographies,
   Geography,
-<<<<<<< HEAD
   ZoomableGroup,
 } from "react-simple-maps";
 import { scaleQuantile } from "d3-scale";
@@ -29,26 +18,6 @@ const countryValues = {
   Spain: 30,
   Portugal: 1,
   Germany: 7,
-=======
-  ZoomableGroup
-} from 'react-simple-maps';
-
-import { europeGeoURL } from '../mapping/countries/europe.js';
-import { africaGeoURL } from '../mapping/countries/africa.js';
-import { asiaGeoURL } from '../mapping/countries/asia.js';
-import { northAmericaGeoURL } from '../mapping/countries/northAmerica.js';
-import { oceaniaGeoURL } from '../mapping/countries/oceania.js';
-import { southAmericaGeoURL } from '../mapping/countries/southAmerica.js';
-
-const GEOKEYS = {
-  Europe: [europeGeoURL, [18.5, 51], 4.55, 'Europe'],
-  Africa: [africaGeoURL, [18.5, 2], 2.5, 'Africa'],
-  Asia: [asiaGeoURL, [90, 28], 2.2, 'Asia'],
-  North_America: [northAmericaGeoURL, [-80, 40], 2.5, 'North America'],
-  South_America: [southAmericaGeoURL, [-60, -19], 2.5, 'South America'],
-  Australia: [oceaniaGeoURL, [148, -23], 3.75, 'Oceania'],
-  Oceania: [oceaniaGeoURL, [148, -23], 3.75, 'Oceania']
->>>>>>> development
 };
 
 export default function ExploreContinent() {
@@ -64,10 +33,6 @@ export default function ExploreContinent() {
     .domain(Object.keys(countryValues).map((d) => countryValues[d]))
     .range(geoReferences.COLORRANGE);
 
-<<<<<<< HEAD
-=======
-  // console.log(countries);
->>>>>>> development
   const navigateToCountry = (geo) => {
     for (var i = 0; i < countries.length; i++) {
       if (geo.properties.geounit === countries[i].name) {
@@ -100,11 +65,11 @@ export default function ExploreContinent() {
   return (
     <div
       style={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <h2>{continent}</h2>
@@ -114,7 +79,7 @@ export default function ExploreContinent() {
           height: "65%",
         }}
       >
-        <ComposableMap data-tip='' width={1000} height={650}>
+        <ComposableMap data-tip="" width={1000} height={650}>
           <ZoomableGroup
             zoom={geoReferences.GEOKEYSV2[id].ZOOMLEV}
             center={geoReferences.GEOKEYSV2[id].XYC}
