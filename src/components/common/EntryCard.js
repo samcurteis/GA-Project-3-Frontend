@@ -17,6 +17,8 @@ export default function EntryCard({
   addedBy,
   country,
   countryId,
+  userId,
+  userpic,
   entryId,
   setIsUpdated
 }) {
@@ -29,7 +31,6 @@ export default function EntryCard({
   };
 
   const navigateToCountry = () => {
-    // console.log('onclick working');
     navigate(`/countries/${country._id}`);
   };
 
@@ -40,7 +41,7 @@ export default function EntryCard({
   const saveChanges = () => {
     if (text !== entryText) {
       API.PUT(
-        API.ENDPOINTS.singleEntry(countryId, entryId),
+        API.ENDPOINTS.singleEntry(entryId),
         { text: entryText },
         API.getHeaders()
       )
@@ -53,28 +54,26 @@ export default function EntryCard({
   };
 
   const deleteReview = () => {
-    API.DELETE(API.ENDPOINTS.singleEntry(countryId, entryId), API.getHeaders())
+    API.DELETE(API.ENDPOINTS.singleEntry(entryId, countryId, userId), API.getHeaders())
       .then(() => {
         setIsUpdated(true);
       })
       .catch((e) => console.log(e));
   };
-
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
-        {addedBy?.cloudinaryImageId && (
-          <ProfilePicture cloudinaryImageId={addedBy.cloudinaryImageId} />
-        )}
+        {userpic && <ProfilePicture cloudinaryImageId={userpic} size={100} />}
         {country?.code && (
           <img
             loading='lazy'
             width='50'
             src={`https://flagcdn.com/w20/${country.code.toLowerCase()}.png`}
             srcSet={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png 1x`}
-            alt=''
+            alt={country.name}
           />
         )}
+
         {addedBy ? (
           <Typography
             sx={{ fontSize: 14, textTransform: 'capitalize' }}
@@ -101,14 +100,18 @@ export default function EntryCard({
             style={{ width: '100%', height: '22px' }}
           />
         ) : (
-          <Typography variant='h5' component='div'>
+          <Typography
+            variant='h5'
+            component='div'
+            sx={{ textTransform: 'capitalize' }}
+          >
             {text}
           </Typography>
         )}
       </CardContent>
-      {(AUTH.isOwner(addedBy) || AUTH.getPayload().isAdmin) && (
+      {(AUTH.isOwner(userId) || AUTH.getPayload().isAdmin) && (
         <CardActions>
-          {AUTH.isOwner(addedBy) && (
+          {AUTH.isOwner(userId) && (
             <Button
               size='small'
               sx={{ color: '#3B3D40' }}

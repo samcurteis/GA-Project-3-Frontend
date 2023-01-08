@@ -62,16 +62,16 @@ export default function CountryPage() {
       <Container maxWidth='lg' sx={{ display: 'flex' }}>
         <Box>
           <CardContent>
-            <Typography variant='h5' component='p'>
+            <Typography variant='h2' component='p'>
               {singleCountry?.name}
             </Typography>
             {singleCountry && (
               <img
                 loading='lazy'
-                width='20'
-                src={`https://flagcdn.com/w20/${singleCountry.code.toLowerCase()}.png`}
-                srcSet={`https://flagcdn.com/w40/${singleCountry.code.toLowerCase()}.png 2x`}
-                alt=''
+                width='200'
+                src={`https://www.worldatlas.com/r/w425/img/flag/${singleCountry.code.toLowerCase()}-flag.jpg`}
+                srcSet={`https://www.worldatlas.com/r/w425/img/flag/${singleCountry.code.toLowerCase()}-flag.jpg 2x`}
+                alt={`${singleCountry.name}`}
               />
             )}
           </CardContent>
@@ -83,20 +83,6 @@ export default function CountryPage() {
         </Box>
       </Container>
       <Container maxWidth='lg'>
-        {!!singleCountry?.entries.length && (
-          <Box>
-            {singleCountry?.entries?.map((entry) => (
-              <EntryCard
-                key={entry._id}
-                text={entry.text}
-                addedBy={entry.addedBy.username}
-                countryId={id}
-                entryId={entry._id}
-                setIsUpdated={setIsUpdated}
-              />
-            ))}
-          </Box>
-        )}
         {isLoggedIn && (
           <form onSubmit={handleSubmit}>
             <Box sx={{ mb: 2 }}>
@@ -115,6 +101,21 @@ export default function CountryPage() {
               ADD MY VISIT
             </Button>
           </form>
+        )}
+        {!!singleCountry?.entries.length && (
+          <Box>
+            {singleCountry?.entries?.map((entry) => (
+              <EntryCard
+                key={entry._id}
+                text={entry.text}
+                addedBy={entry.addedBy.username}
+                countryId={id}
+                userpic={entry.addedBy.cloudinaryImageId}
+                entryId={entry._id}
+                setIsUpdated={setIsUpdated}
+              />
+            ))}
+          </Box>
         )}
       </Container>
     </>
