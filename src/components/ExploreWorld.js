@@ -105,28 +105,15 @@ export default function ExploreWorld() {
                   ))}
                   {geographies.map((geo) => {
                     const centroid =
-<<<<<<< HEAD
                       geo.properties.CONTINENT === "Europe"
                         ? [19.292002, 48.73989]
                         : geoCentroid(geo);
-=======
-                      geo.properties.CONTINENT == 'Europe'
-                        ? [19.292002, 48.73989]
-                        : geoCentroid(geo);
-                    // const cur = geo.properties.CONTINENT;
-                    // console.log(cur);
->>>>>>> development
                     return (
                       <>
                         <g key={geo.rsmKey + '-name'}></g>;
                         <Marker coordinates={centroid}>
-<<<<<<< HEAD
                           <text y="2" fontSize={14} textAnchor="middle">
                             {content === geo.properties.CONTINENT
-=======
-                          <text y='2' fontSize={14} textAnchor='middle'>
-                            {content == geo.properties.CONTINENT
->>>>>>> development
                               ? GEOKEYS[content][3]
                               : ''}
                           </text>

@@ -1,6 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-<<<<<<< HEAD
 import Home from "./components/Home";
 import Register from "./components/Register";
 import ExploreWorld from "./components/ExploreWorld";
@@ -11,21 +10,10 @@ import UserPage from "./components/UserPage";
 import UserIndex from "./components/UserIndex";
 import CountryPage from "./components/CountryPage";
 // import Explore from "./components/Explore";
-=======
-import Home from './components/Home';
-import Register from './components/Register';
-import ExploreWorld from './components/ExploreWorld';
-import ExploreContinent from './components/ExploreContinent';
-import Login from './components/Login';
-import Navbar from './components/Navbar';
-import UserPage from './components/UserPage';
-import UserIndex from './components/UserIndex';
-import CountryPage from './components/CountryPage';
->>>>>>> development
 
-import './App.css';
+import "./App.css";
 
-window.Buffer = window.Buffer || require('buffer').Buffer;
+window.Buffer = window.Buffer || require("buffer").Buffer;
 
 function App() {
   return (

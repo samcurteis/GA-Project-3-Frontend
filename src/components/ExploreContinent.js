@@ -110,14 +110,8 @@ export default function ExploreContinent() {
       <h2>{continent}</h2>
       <div
         style={{
-<<<<<<< HEAD
           width: "75%",
           height: "65%",
-=======
-          width: '75%',
-          height: '65%'
-          // borderStyle: "double",
->>>>>>> development
         }}
       >
         <ComposableMap data-tip='' width={1000} height={650}>
@@ -128,7 +122,6 @@ export default function ExploreContinent() {
           >
             <Geographies geography={geoReferences.GEOKEYSV2[id].URL}>
               {({ geographies }) =>
-<<<<<<< HEAD
                 geographies.map((geo) => {
                   return (
                     <>
@@ -160,31 +153,6 @@ export default function ExploreContinent() {
                     </>
                   );
                 })
-=======
-                geographies.map((geo) => (
-                  <Geography
-                    geography={geo}
-                    fill='#799F56'
-                    stroke='lightgrey'
-                    strokeWidth={0.5}
-                    style={{
-                      default: { outline: 'none' },
-                      hover: { outline: 'none', fill: '#EEE' },
-                      pressed: { outline: 'none' }
-                    }}
-                    key={geo.rsmKey}
-                    onClick={() => navigateToCountry(geo)}
-                    onMouseEnter={() => {
-                      const { CONTINENT } = geo.properties;
-                      // console.log(geo);
-                      // setContent(`${CONTINENT}`);
-                    }}
-                    onMouseLeave={() => {
-                      // setContent("");
-                    }}
-                  />
-                ))
->>>>>>> development
               }
             </Geographies>
           </ZoomableGroup>
