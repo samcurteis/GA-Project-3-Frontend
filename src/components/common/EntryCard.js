@@ -69,9 +69,9 @@ export default function EntryCard({
         {country?.code && (
           <img
             loading='lazy'
-            width='20'
+            width='50'
             src={`https://flagcdn.com/w20/${country.code.toLowerCase()}.png`}
-            srcSet={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png 2x`}
+            srcSet={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png 1x`}
             alt=''
           />
         )}
@@ -85,8 +85,8 @@ export default function EntryCard({
           </Typography>
         ) : (
           <Typography
-            sx={{ fontSize: 14, textTransform: 'capitalize' }}
-            color='text.secondary'
+            sx={{ fontWeight: 'bold', textTransform: 'capitalize' }}
+            color='text.primary'
             gutterBottom
             onClick={navigateToCountry}
           >

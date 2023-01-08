@@ -27,13 +27,9 @@ export default function ProfilePicture({ cloudinaryImageId }) {
 
   // Apply the transformation.
   myImage
-    .resize(thumbnail().width(150).height(150).gravity(focusOn(FocusOn.face()))) // Crop the image, focusing on the face.
+    .resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face()))) // Crop the image, focusing on the face.
     .roundCorners(byRadius(20)); // Round the corners.
 
   // Render the transformed image in a React component.
-  return (
-    <div>
-      <AdvancedImage cldImg={myImage} />
-    </div>
-  );
+  return <AdvancedImage cldImg={myImage} />;
 }

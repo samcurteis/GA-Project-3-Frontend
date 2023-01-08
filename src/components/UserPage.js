@@ -41,8 +41,22 @@ export default function UserPage() {
   if (isLoggedIn) {
     return (
       <>
-        <Container maxWidth='lg' sx={{ display: 'flex', marginTop: '20px' }}>
-          <Box>
+        <Container
+          maxWidth='lg'
+          sx={{
+            display: 'flex',
+            marginTop: '20px',
+            justifyContent: 'center',
+            flexDirection: 'column'
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center'
+            }}
+          >
             {singleUser && (
               <>
                 <ProfilePicture
@@ -51,93 +65,92 @@ export default function UserPage() {
                 <h2>{singleUser?.username}</h2>
               </>
             )}
-
-            <CardActions
-              sx={{ flexDirection: 'column', justifyContent: 'center' }}
-            >
-              {AUTH.isOwner(singleUser?._id) ? (
-                <>
-                  {singleUser?.entries?.length === 1 ? (
-                    <p>You have visited 1 country</p>
-                  ) : (
-                    <p>
-                      You have visited {singleUser?.entries.length} countries
-                    </p>
-                  )}
-                  <Box>
-                    <Button
-                      size='small'
-                      sx={{ color: '#3B3D40' }}
-                      onClick={goToMap}
-                    >
-                      BACK TO THE MAP
-                    </Button>
-                    <Button
-                      size='small'
-                      sx={{ color: '#3B3D40' }}
-                      onClick={goToUsers}
-                    >
-                      BACK TO USERS
-                    </Button>
-                  </Box>
-                  <Box>
-                    {!isCreateEntryOpen && (
-                      <Button
-                        size='small'
-                        sx={{ color: '#3B3D40' }}
-                        onClick={openCreateEntry}
-                      >
-                        WRITE ABOUT SOMEWHERE YOU'VE BEEN
-                      </Button>
-                    )}
-                    {isCreateEntryOpen && (
-                      <>
-                        <CreateEntry
-                          closeCreateEntry={closeCreateEntry}
-                          setIsUpdated={setIsUpdated}
-                        />
-                        <Button
-                          size='small'
-                          sx={{ color: '#3B3D40' }}
-                          onClick={closeCreateEntry}
-                        >
-                          CANCEL
-                        </Button>
-                      </>
-                    )}
-                  </Box>
-                </>
-              ) : (
-                <>
-                  {singleUser?.entries?.length === 1 ? (
-                    <p>{singleUser?.username} has visited 1 country</p>
-                  ) : (
-                    <p>
-                      {singleUser?.username} has visited{' '}
-                      {singleUser?.entries.length} countries
-                    </p>
-                  )}
-                </>
-              )}
-            </CardActions>
+          </Box>
+          <CardActions
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center'
+            }}
+          >
             <Box>
-              {singleUser?.entries?.map((entry) => (
-                <EntryCard
-                  key={entry._id}
-                  text={entry.text}
-                  addedBy={null}
-                  country={entry.country}
-                  countryId={id}
-                  entryId={entry._id}
-                  setIsUpdated={setIsUpdated}
-                />
-              ))}
+              <Button size='small' sx={{ color: '#3B3D40' }} onClick={goToMap}>
+                BACK TO THE MAP
+              </Button>
+              <Button
+                size='small'
+                sx={{ color: '#3B3D40' }}
+                onClick={goToUsers}
+              >
+                BACK TO USERS
+              </Button>
             </Box>
+            {AUTH.isOwner(singleUser?._id) ? (
+              <>
+                {singleUser?.entries?.length === 1 ? (
+                  <p>You have visited 1 country</p>
+                ) : (
+                  <p>You have visited {singleUser?.entries.length} countries</p>
+                )}
+              </>
+            ) : (
+              <>
+                {singleUser?.entries?.length === 1 ? (
+                  <p>{singleUser?.username} has visited 1 country</p>
+                ) : (
+                  <p>
+                    {singleUser?.username} has visited{' '}
+                    {singleUser?.entries.length} countries
+                  </p>
+                )}
+              </>
+            )}
+            {AUTH.isOwner(singleUser?._id) && (
+              <Box>
+                {!isCreateEntryOpen && (
+                  <Button
+                    size='small'
+                    sx={{ color: '#3B3D40' }}
+                    onClick={openCreateEntry}
+                  >
+                    WRITE ABOUT SOMEWHERE YOU'VE BEEN
+                  </Button>
+                )}
+                {isCreateEntryOpen && (
+                  <>
+                    <CreateEntry
+                      closeCreateEntry={closeCreateEntry}
+                      setIsUpdated={setIsUpdated}
+                    />
+                    <Button
+                      size='small'
+                      sx={{ color: '#3B3D40' }}
+                      onClick={closeCreateEntry}
+                    >
+                      CANCEL
+                    </Button>
+                  </>
+                )}
+              </Box>
+            )}
+          </CardActions>
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            {singleUser?.entries?.map((entry) => (
+              <EntryCard
+                key={entry._id}
+                text={entry.text}
+                addedBy={null}
+                country={entry.country}
+                countryId={id}
+                entryId={entry._id}
+                setIsUpdated={setIsUpdated}
+              />
+            ))}
           </Box>
         </Container>
       </>
     );
   } else {
-    return <p>Uh oh! You need to be logged in to view this page</p>;
+    return <p>Loading</p>;
   }
 }
