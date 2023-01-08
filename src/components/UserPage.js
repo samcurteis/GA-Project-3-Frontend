@@ -28,13 +28,15 @@ export default function UserPage() {
     setIsUpdated(false);
   }, [id, isUpdated]);
 
-  const goToMap = () => navigate('/');
+  const goToMap = () => navigate('/exploreworld');
+
+  const goToUsers = () => navigate('/users');
 
   return (
     <>
       <Container maxWidth='lg' sx={{ display: 'flex' }}>
         <Box>
-          {singleUser?.cloudinaryImageId && (
+          {singleUser && (
             <ProfilePicture cloudinaryImageId={singleUser.cloudinaryImageId} />
           )}
           <CardActions>
@@ -47,25 +49,24 @@ export default function UserPage() {
               </>
             )}
             <Button size='small' sx={{ color: '#3B3D40' }} onClick={goToMap}>
-              Back to the Map!
+              BACK TO THE MAP
+            </Button>
+            <Button size='small' sx={{ color: '#3B3D40' }} onClick={goToUsers}>
+              BACK TO USERS
             </Button>
           </CardActions>
           <Box>
-            {singleUser?.entries?.map((entry) => {
-              // console.log(entry.country);
-
-              return (
-                <EntryCard
-                  key={entry._id}
-                  text={entry.text}
-                  addedBy={null}
-                  country={entry.country}
-                  countryId={id}
-                  entryId={entry._id}
-                  setIsUpdated={setIsUpdated}
-                />
-              );
-            })}
+            {singleUser?.entries?.map((entry) => (
+              <EntryCard
+                key={entry._id}
+                text={entry.text}
+                addedBy={null}
+                country={entry.country}
+                countryId={id}
+                entryId={entry._id}
+                setIsUpdated={setIsUpdated}
+              />
+            ))}
           </Box>
         </Box>
       </Container>

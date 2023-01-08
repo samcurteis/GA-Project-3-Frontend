@@ -33,8 +33,6 @@ export default function EntryCard({
     navigate(`/countries/${country._id}`);
   };
 
-  console.log(country);
-
   const handleReviewTextChange = (e) => {
     setReviewText(e.target.value);
   };

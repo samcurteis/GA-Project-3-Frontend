@@ -13,7 +13,8 @@ import {
 import { geoCentroid } from 'd3-geo';
 
 import { continentsGeoURL } from '../mapping/continents.js';
-import './styles/styles.scss';
+import SearchCountry from './common/SearchCountry';
+// import './styles/styles.scss';
 
 //TODO tool tip by mouse
 //TODO label countries
@@ -59,6 +60,7 @@ export default function ExploreWorld() {
     <>
       {/* <h3>Where would you like to go?</h3> */}
       {/* <Tooltip followCursor={true}>{content}</Tooltip> */}
+      <SearchCountry />
       <div
         style={{
           display: 'flex',
@@ -101,8 +103,8 @@ export default function ExploreWorld() {
                       geo.properties.CONTINENT == 'Europe'
                         ? [19.292002, 48.73989]
                         : geoCentroid(geo);
-                    const cur = geo.properties.CONTINENT;
-                    console.log(cur);
+                    // const cur = geo.properties.CONTINENT;
+                    // console.log(cur);
                     return (
                       <>
                         <g key={geo.rsmKey + '-name'}></g>;
