@@ -57,22 +57,20 @@ export default function CountryPage() {
 
   const goToMap = () => navigate('/exploreworld');
 
-  console.log(singleCountry?.entries)
-
   return (
     <>
       <Container maxWidth='lg' sx={{ display: 'flex' }}>
         <Box>
           <CardContent>
-            <Typography variant='h5' component='p'>
+            <Typography variant='h2' component='p'>
               {singleCountry?.name}
             </Typography>
             {singleCountry && (
               <img
                 loading='lazy'
-                width='20'
-                src={`https://flagcdn.com/w20/${singleCountry.code.toLowerCase()}.png`}
-                srcSet={`https://flagcdn.com/w40/${singleCountry.code.toLowerCase()}.png 2x`}
+                width='200'
+                src={`https://www.worldatlas.com/r/w425/img/flag/${singleCountry.code.toLowerCase()}-flag.jpg`}
+                srcSet={`https://www.worldatlas.com/r/w425/img/flag/${singleCountry.code.toLowerCase()}-flag.jpg 2x`}
                 alt={`${singleCountry.name}`}
               />
             )}
