@@ -7,7 +7,7 @@ import CreateEntry from './common/CreateEntry';
 import ProfilePicture from './common/ProfilePicture';
 import EntryCard from './common/EntryCard';
 
-import { Container, Box, CardActions, Button } from '@mui/material';
+import { Container, Box, CardActions, Button, Typography } from '@mui/material';
 
 export default function UserPage() {
   const [isLoggedIn] = useAuthenticated();
@@ -28,7 +28,9 @@ export default function UserPage() {
     setIsUpdated(false);
   }, [id, isUpdated]);
 
-  const goToMap = () => navigate('/');
+  const goToMap = () => navigate('/exploreworld');
+
+  console.log(singleUser?._id)
 
   return (
     <>
@@ -37,6 +39,12 @@ export default function UserPage() {
           {singleUser?.cloudinaryImageId && (
             <ProfilePicture cloudinaryImageId={singleUser.cloudinaryImageId} />
           )}
+            {AUTH.isOwner(singleUser?._id) ? (
+              <Typography>Tell us about yourself</Typography>
+            ) : (
+              <Typography>description</Typography>
+            )}
+            {/* add in description to fill out the empty void in userpages */}
           <CardActions>
             {isLoggedIn && AUTH.isOwner(singleUser?._id) && (
               <>
@@ -52,15 +60,15 @@ export default function UserPage() {
           </CardActions>
           <Box>
             {singleUser?.entries?.map((entry) => {
-              // console.log(entry.country);
-
               return (
                 <EntryCard
                   key={entry._id}
                   text={entry.text}
                   addedBy={null}
+                  userId={singleUser?._id}
+                  userpic={null}
                   country={entry.country}
-                  countryId={id}
+                  countryId={entry.country?._id}
                   entryId={entry._id}
                   setIsUpdated={setIsUpdated}
                 />

@@ -57,6 +57,8 @@ export default function CountryPage() {
 
   const goToMap = () => navigate('/exploreworld');
 
+  console.log(singleCountry.entries)
+
   return (
     <>
       <Container maxWidth='lg' sx={{ display: 'flex' }}>
@@ -83,20 +85,6 @@ export default function CountryPage() {
         </Box>
       </Container>
       <Container maxWidth='lg'>
-        {!!singleCountry?.entries.length && (
-          <Box>
-            {singleCountry?.entries?.map((entry) => (
-              <EntryCard
-                key={entry._id}
-                text={entry.text}
-                addedBy={entry.addedBy.username}
-                countryId={id}
-                entryId={entry._id}
-                setIsUpdated={setIsUpdated}
-              />
-            ))}
-          </Box>
-        )}
         {isLoggedIn && (
           <form onSubmit={handleSubmit}>
             <Box sx={{ mb: 2 }}>
@@ -115,6 +103,21 @@ export default function CountryPage() {
               ADD MY VISIT
             </Button>
           </form>
+        )}
+        {!!singleCountry?.entries.length && (
+          <Box>
+            {singleCountry?.entries?.map((entry) => (
+              <EntryCard
+                key={entry._id}
+                text={entry.text}
+                addedBy={entry.addedBy.username}
+                countryId={id}
+                userpic={entry.addedBy.cloudinaryImageId}
+                entryId={entry._id}
+                setIsUpdated={setIsUpdated}
+              />
+            ))}
+          </Box>
         )}
       </Container>
     </>

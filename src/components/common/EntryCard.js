@@ -17,6 +17,8 @@ export default function EntryCard({
   addedBy,
   country,
   countryId,
+  userId,
+  userpic,
   entryId,
   setIsUpdated
 }) {
@@ -29,11 +31,8 @@ export default function EntryCard({
   };
 
   const navigateToCountry = () => {
-    // console.log('onclick working');
     navigate(`/countries/${country._id}`);
   };
-
-  console.log(country);
 
   const handleReviewTextChange = (e) => {
     setReviewText(e.target.value);
@@ -61,13 +60,11 @@ export default function EntryCard({
       })
       .catch((e) => console.log(e));
   };
-
+console.log(country)
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
-        {addedBy?.cloudinaryImageId && (
-          <ProfilePicture cloudinaryImageId={addedBy.cloudinaryImageId} />
-        )}
+        {userpic && <ProfilePicture cloudinaryImageId={userpic} />}
         {country?.code && (
           <img
             loading='lazy'
@@ -77,6 +74,7 @@ export default function EntryCard({
             alt=''
           />
         )}
+
         {addedBy ? (
           <Typography
             sx={{ fontSize: 14, textTransform: 'capitalize' }}
@@ -92,7 +90,7 @@ export default function EntryCard({
             gutterBottom
             onClick={navigateToCountry}
           >
-            {country.name}
+            {country?.name}
           </Typography>
         )}
 
@@ -108,9 +106,9 @@ export default function EntryCard({
           </Typography>
         )}
       </CardContent>
-      {(AUTH.isOwner(addedBy) || AUTH.getPayload().isAdmin) && (
+      {(AUTH.isOwner(userId) || AUTH.getPayload().isAdmin) && (
         <CardActions>
-          {AUTH.isOwner(addedBy) && (
+          {AUTH.isOwner(userId) && (
             <Button
               size='small'
               sx={{ color: '#3B3D40' }}

@@ -40,8 +40,6 @@ export default function UserIndex() {
     if (!query) {
       setIsDropdownOpen(false);
     }
-
-    console.log('value is ' + query);
     API.POST(API.ENDPOINTS.searchUsers(query), {}, API.getHeaders())
       .then(({ data }) => {
         setSearchedUsers(data);
