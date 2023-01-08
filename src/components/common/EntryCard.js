@@ -41,7 +41,7 @@ export default function EntryCard({
   const saveChanges = () => {
     if (text !== entryText) {
       API.PUT(
-        API.ENDPOINTS.singleEntry(countryId, entryId),
+        API.ENDPOINTS.singleEntry(entryId),
         { text: entryText },
         API.getHeaders()
       )
@@ -54,13 +54,12 @@ export default function EntryCard({
   };
 
   const deleteReview = () => {
-    API.DELETE(API.ENDPOINTS.singleEntry(countryId, entryId), API.getHeaders())
+    API.DELETE(API.ENDPOINTS.singleEntry(entryId, countryId, userId), API.getHeaders())
       .then(() => {
         setIsUpdated(true);
       })
       .catch((e) => console.log(e));
   };
-console.log(country)
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -71,7 +70,7 @@ console.log(country)
             width='50'
             src={`https://flagcdn.com/w20/${country.code.toLowerCase()}.png`}
             srcSet={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png 1x`}
-            alt=''
+            alt={country.name}
           />
         )}
 
@@ -101,7 +100,11 @@ console.log(country)
             style={{ width: '100%', height: '22px' }}
           />
         ) : (
-          <Typography variant='h5' component='div'>
+          <Typography
+            variant='h5'
+            component='div'
+            sx={{ textTransform: 'capitalize' }}
+          >
             {text}
           </Typography>
         )}

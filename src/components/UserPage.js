@@ -134,7 +134,7 @@ export default function UserPage() {
               </Box>
             )}
           </CardActions>
-          <Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             {singleUser?.entries?.map((entry) => {
               return (
                 <EntryCard

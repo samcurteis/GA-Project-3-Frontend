@@ -57,7 +57,7 @@ export default function CountryPage() {
 
   const goToMap = () => navigate('/exploreworld');
 
-  console.log(singleCountry.entries)
+  console.log(singleCountry?.entries)
 
   return (
     <>
@@ -73,7 +73,7 @@ export default function CountryPage() {
                 width='20'
                 src={`https://flagcdn.com/w20/${singleCountry.code.toLowerCase()}.png`}
                 srcSet={`https://flagcdn.com/w40/${singleCountry.code.toLowerCase()}.png 2x`}
-                alt=''
+                alt={`${singleCountry.name}`}
               />
             )}
           </CardContent>
