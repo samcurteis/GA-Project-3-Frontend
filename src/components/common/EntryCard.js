@@ -90,7 +90,7 @@ export default function EntryCard({
             gutterBottom
             onClick={navigateToCountry}
           >
-            {country.name}
+            {country?.name}
           </Typography>
         )}
 
