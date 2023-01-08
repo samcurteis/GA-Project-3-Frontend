@@ -48,11 +48,16 @@ export default function CreateEntry({ closeCreateEntry, setIsUpdated }) {
   };
 
   return (
-    <Container
-      maxWidth='lg'
-      sx={{ display: 'flex', justifyContent: 'center', pt: 5 }}
-    >
-      <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
+      <Container
+        maxWidth='lg'
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          pt: 5
+        }}
+      >
         <Box>
           <Autocomplete
             id='country-select-demo'
@@ -92,7 +97,7 @@ export default function CreateEntry({ closeCreateEntry, setIsUpdated }) {
             )}
           />
         </Box>
-        <Box sx={{ mb: 2 }}>
+        <Box sx={{ display: 'flex', mb: 2 }}>
           <TextField
             sx={{ width: 300 }}
             size='medium'
@@ -104,10 +109,14 @@ export default function CreateEntry({ closeCreateEntry, setIsUpdated }) {
             name='text'
           />
         </Box>
-        <Button type='submit' sx={{ color: '#3B3D40' }}>
+        <Button
+          variant='contained'
+          type='submit'
+          sx={{ display: 'flex', color: '#3B3D40' }}
+        >
           ADD MY VISIT
         </Button>
-      </form>
-    </Container>
+      </Container>
+    </form>
   );
 }
