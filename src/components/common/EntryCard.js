@@ -63,7 +63,7 @@ export default function EntryCard({
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
-        {userpic && <ProfilePicture cloudinaryImageId={userpic} />}
+        {userpic && <ProfilePicture cloudinaryImageId={userpic} size={100} />}
         {country?.code && (
           <img
             loading='lazy'

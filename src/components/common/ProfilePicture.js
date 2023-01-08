@@ -9,7 +9,7 @@ import { byRadius } from '@cloudinary/url-gen/actions/roundCorners';
 import { focusOn } from '@cloudinary/url-gen/qualifiers/gravity';
 import { FocusOn } from '@cloudinary/url-gen/qualifiers/focusOn';
 
-export default function ProfilePicture({ cloudinaryImageId }) {
+export default function ProfilePicture({ cloudinaryImageId, size }) {
   const [userImage, setUserImage] = useState(cloudinaryImageId);
   // Create and configure your Cloudinary instance.
   const cld = new Cloudinary({
@@ -27,7 +27,12 @@ export default function ProfilePicture({ cloudinaryImageId }) {
 
   // Apply the transformation.
   myImage
-    .resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face()))) // Crop the image, focusing on the face.
+    .resize(
+      thumbnail()
+        .width(size ? size : 300)
+        .height(size ? size : 300)
+        .gravity(focusOn(FocusOn.face()))
+    ) // Crop the image, focusing on the face.
     .roundCorners(byRadius(20)); // Round the corners.
 
   // Render the transformed image in a React component.
