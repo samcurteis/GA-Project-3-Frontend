@@ -41,7 +41,7 @@ export default function UserPage() {
   if (isLoggedIn) {
     return (
       <>
-        <Container maxWidth='lg' sx={{ display: 'flex' }}>
+        <Container maxWidth='lg' sx={{ display: 'flex', marginTop: '20px' }}>
           <Box>
             {singleUser && (
               <>
@@ -51,13 +51,10 @@ export default function UserPage() {
                 <h2>{singleUser?.username}</h2>
               </>
             )}
-            <Button size='small' sx={{ color: '#3B3D40' }} onClick={goToMap}>
-              BACK TO THE MAP
-            </Button>
-            <Button size='small' sx={{ color: '#3B3D40' }} onClick={goToUsers}>
-              BACK TO USERS
-            </Button>
-            <CardActions>
+
+            <CardActions
+              sx={{ flexDirection: 'column', justifyContent: 'center' }}
+            >
               {AUTH.isOwner(singleUser?._id) ? (
                 <>
                   {singleUser?.entries?.length === 1 ? (
@@ -67,6 +64,22 @@ export default function UserPage() {
                       You have visited {singleUser?.entries.length} countries
                     </p>
                   )}
+                  <Box>
+                    <Button
+                      size='small'
+                      sx={{ color: '#3B3D40' }}
+                      onClick={goToMap}
+                    >
+                      BACK TO THE MAP
+                    </Button>
+                    <Button
+                      size='small'
+                      sx={{ color: '#3B3D40' }}
+                      onClick={goToUsers}
+                    >
+                      BACK TO USERS
+                    </Button>
+                  </Box>
                   <Box>
                     {!isCreateEntryOpen && (
                       <Button
