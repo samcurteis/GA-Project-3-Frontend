@@ -15,6 +15,7 @@ export default function UserPage() {
   const { id } = useParams();
   const [singleUser, setSingleUser] = useState(null);
   const [isUpdated, setIsUpdated] = useState(false);
+  const [isCreateEntryOpen, setIsCreateEntryOpen] = useState(false);
 
   useEffect(() => {
     API.POST(API.ENDPOINTS.singleUser(id), {}, API.getHeaders())
@@ -30,33 +31,108 @@ export default function UserPage() {
 
   const goToMap = () => navigate('/exploreworld');
 
-  console.log(singleUser?._id)
+  const goToUsers = () => navigate('/users');
 
-  return (
-    <>
-      <Container maxWidth='lg' sx={{ display: 'flex' }}>
-        <Box>
-          {singleUser?.cloudinaryImageId && (
-            <ProfilePicture cloudinaryImageId={singleUser.cloudinaryImageId} />
-          )}
-            {AUTH.isOwner(singleUser?._id) ? (
-              <Typography>Tell us about yourself</Typography>
-            ) : (
-              <Typography>description</Typography>
-            )}
-            {/* add in description to fill out the empty void in userpages */}
-          <CardActions>
-            {isLoggedIn && AUTH.isOwner(singleUser?._id) && (
+  const openCreateEntry = () => setIsCreateEntryOpen(true);
+  const closeCreateEntry = () => setIsCreateEntryOpen(false);
+
+  // console.log(AUTH.getPayload().userId);
+
+  if (isLoggedIn) {
+    return (
+      <>
+        <Container
+          maxWidth='lg'
+          sx={{
+            display: 'flex',
+            marginTop: '20px',
+            justifyContent: 'center',
+            flexDirection: 'column'
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center'
+            }}
+          >
+            {singleUser && (
               <>
-                <Box>
-                  <p> Visited somewhere recently?</p>
-                  <CreateEntry />
-                </Box>
+                <ProfilePicture
+                  cloudinaryImageId={singleUser.cloudinaryImageId}
+                />
+                <h2>{singleUser?.username}</h2>
               </>
             )}
-            <Button size='small' sx={{ color: '#3B3D40' }} onClick={goToMap}>
-              Back to the Map!
-            </Button>
+          </Box>
+          <CardActions
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center'
+            }}
+          >
+            <Box>
+              <Button size='small' sx={{ color: '#3B3D40' }} onClick={goToMap}>
+                BACK TO THE MAP
+              </Button>
+              <Button
+                size='small'
+                sx={{ color: '#3B3D40' }}
+                onClick={goToUsers}
+              >
+                BACK TO USERS
+              </Button>
+            </Box>
+            {AUTH.isOwner(singleUser?._id) ? (
+              <>
+                {singleUser?.entries?.length === 1 ? (
+                  <p>You have visited 1 country</p>
+                ) : (
+                  <p>You have visited {singleUser?.entries.length} countries</p>
+                )}
+              </>
+            ) : (
+              <>
+                {singleUser?.entries?.length === 1 ? (
+                  <p>{singleUser?.username} has visited 1 country</p>
+                ) : (
+                  <p>
+                    {singleUser?.username} has visited{' '}
+                    {singleUser?.entries.length} countries
+                  </p>
+                )}
+              </>
+            )}
+            {AUTH.isOwner(singleUser?._id) && (
+              <Box>
+                {!isCreateEntryOpen && (
+                  <Button
+                    size='small'
+                    sx={{ color: '#3B3D40' }}
+                    onClick={openCreateEntry}
+                  >
+                    WRITE ABOUT SOMEWHERE YOU'VE BEEN
+                  </Button>
+                )}
+                {isCreateEntryOpen && (
+                  <>
+                    <CreateEntry
+                      closeCreateEntry={closeCreateEntry}
+                      setIsUpdated={setIsUpdated}
+                    />
+                    <Button
+                      size='small'
+                      sx={{ color: '#3B3D40' }}
+                      onClick={closeCreateEntry}
+                    >
+                      CANCEL
+                    </Button>
+                  </>
+                )}
+              </Box>
+            )}
           </CardActions>
           <Box>
             {singleUser?.entries?.map((entry) => {
@@ -75,8 +151,10 @@ export default function UserPage() {
               );
             })}
           </Box>
-        </Box>
-      </Container>
-    </>
-  );
+        </Container>
+      </>
+    );
+  } else {
+    return <p>Loading</p>;
+  }
 }

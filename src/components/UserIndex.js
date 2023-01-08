@@ -13,6 +13,7 @@ export default function UserIndex() {
   const [users, setUsers] = useState(searchedUsers);
   const [query, setQuery] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [noUsers, setNoUsers] = useState(false);
 
   const handleChange = (e) => {
     setQuery(e.target.value);
@@ -21,9 +22,7 @@ export default function UserIndex() {
   const handleClick = (e) => {
     setQuery('');
     setIsDropdownOpen(false);
-    // console.log(users.contains(id));
     navigate(`/users/${e.target.id}`);
-    console.log('handleClick acivated');
   };
 
   useEffect(() => {
@@ -32,6 +31,7 @@ export default function UserIndex() {
         setUsers(data);
       })
       .catch(({ message, response }) => {
+        setNoUsers(true);
         console.error(message, response);
       });
   }, []);
@@ -39,11 +39,13 @@ export default function UserIndex() {
   useEffect(() => {
     if (!query) {
       setIsDropdownOpen(false);
+    } else {
+      setIsDropdownOpen(true);
     }
+
     API.POST(API.ENDPOINTS.searchUsers(query), {}, API.getHeaders())
       .then(({ data }) => {
         setSearchedUsers(data);
-        setIsDropdownOpen(true);
       })
       .catch((e) => console.log(e));
   }, [query]);
@@ -77,6 +79,9 @@ export default function UserIndex() {
             />
           </Grid>
         ))}
+        {noUsers && (
+          <p>Uh oh! Couldn't find any users. You may need to log in again</p>
+        )}
       </Grid>
     </Container>
   );
