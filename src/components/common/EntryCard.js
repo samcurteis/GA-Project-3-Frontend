@@ -1,5 +1,6 @@
 import { AUTH } from '../../lib/auth';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { API } from '../../lib/api';
 import {
   Card,
@@ -14,15 +15,22 @@ import ProfilePicture from './ProfilePicture';
 export default function EntryCard({
   text,
   addedBy,
+  country,
   countryId,
   entryId,
   setIsUpdated
 }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [entryText, setReviewText] = useState(text);
+  const navigate = useNavigate();
 
   const toggleEditMode = () => {
     setIsEditMode(!isEditMode);
+  };
+
+  const navigateToCountry = () => {
+    // console.log('onclick working');
+    navigate(`/countries/${country._id}`);
   };
 
   const handleReviewTextChange = (e) => {
@@ -55,16 +63,37 @@ export default function EntryCard({
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
-        {addedBy.cloudinaryImageId && (
+        {addedBy?.cloudinaryImageId && (
           <ProfilePicture cloudinaryImageId={addedBy.cloudinaryImageId} />
         )}
-        <Typography
-          sx={{ fontSize: 14, textTransform: 'capitalize' }}
-          color='text.secondary'
-          gutterBottom
-        >
-          Added by {addedBy}:
-        </Typography>
+        {country?.code && (
+          <img
+            loading='lazy'
+            width='50'
+            src={`https://flagcdn.com/w20/${country.code.toLowerCase()}.png`}
+            srcSet={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png 1x`}
+            alt=''
+          />
+        )}
+        {addedBy ? (
+          <Typography
+            sx={{ fontSize: 14, textTransform: 'capitalize' }}
+            color='text.secondary'
+            gutterBottom
+          >
+            Added by {addedBy}:
+          </Typography>
+        ) : (
+          <Typography
+            sx={{ fontWeight: 'bold', textTransform: 'capitalize' }}
+            color='text.primary'
+            gutterBottom
+            onClick={navigateToCountry}
+          >
+            {country?.name}
+          </Typography>
+        )}
+
         {isEditMode ? (
           <TextareaAutosize
             value={entryText}

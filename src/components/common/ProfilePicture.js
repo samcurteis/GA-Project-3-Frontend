@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from '@cloudinary/url-gen';
 
@@ -9,6 +10,7 @@ import { focusOn } from '@cloudinary/url-gen/qualifiers/gravity';
 import { FocusOn } from '@cloudinary/url-gen/qualifiers/focusOn';
 
 export default function ProfilePicture({ cloudinaryImageId }) {
+  const [userImage, setUserImage] = useState(cloudinaryImageId);
   // Create and configure your Cloudinary instance.
   const cld = new Cloudinary({
     cloud: {
@@ -16,18 +18,18 @@ export default function ProfilePicture({ cloudinaryImageId }) {
     }
   });
 
+  if (!userImage) {
+    setUserImage('xyfrkvpysclpv4wbxzm7');
+  }
+
   // Use the image with public ID, 'front_face'.
-  const myImage = cld.image(cloudinaryImageId);
+  const myImage = cld.image(userImage);
 
   // Apply the transformation.
   myImage
-    .resize(thumbnail().width(150).height(150).gravity(focusOn(FocusOn.face()))) // Crop the image, focusing on the face.
+    .resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face()))) // Crop the image, focusing on the face.
     .roundCorners(byRadius(20)); // Round the corners.
 
   // Render the transformed image in a React component.
-  return (
-    <div>
-      <AdvancedImage cldImg={myImage} />
-    </div>
-  );
+  return <AdvancedImage cldImg={myImage} />;
 }

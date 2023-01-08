@@ -1,8 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
-import { AUTH } from "../lib/auth";
-import { useAuthenticated } from "../hooks/useAuthenticated";
-import { AppBar, Box, Toolbar, Typography } from "@mui/material";
-import UserPage from "./UserPage";
+import { Link, useNavigate } from 'react-router-dom';
+import { AUTH } from '../lib/auth';
+import { useAuthenticated } from '../hooks/useAuthenticated';
+import { AppBar, Box, Toolbar, Typography } from '@mui/material';
+// import UserPage from './UserPage';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -10,28 +10,28 @@ const Navbar = () => {
   const logout = () => {
     AUTH.logOut();
     setIsLoggedIn(false);
-    navigate("/");
+    navigate('/');
   };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar variant="dense">
-          <Link to="/">
+      <AppBar position='static'>
+        <Toolbar variant='dense'>
+          <Link to='/'>
             <Typography
-              variant="h6"
-              color="inherit"
-              component="div"
+              variant='h6'
+              color='inherit'
+              component='div'
               sx={{ mr: 2 }}
             >
               Home
             </Typography>
           </Link>
-          <Link to="/exploreworld">
+          <Link to='/exploreworld'>
             <Typography
-              variant="h6"
-              color="inherit"
-              component="div"
+              variant='h6'
+              color='inherit'
+              component='div'
               sx={{ mr: 2 }}
             >
               Explore
@@ -39,11 +39,21 @@ const Navbar = () => {
           </Link>
           {isLoggedIn ? (
             <>
-              <Link to="/" onClick={logout} className="navbarLink">
+              <Link to='/users' className='navbarLink'>
                 <Typography
-                  variant="h6"
-                  color="inherit"
-                  component="div"
+                  variant='h6'
+                  color='inherit'
+                  component='div'
+                  sx={{ mr: 2 }}
+                >
+                  Users
+                </Typography>
+              </Link>
+              <Link to='/' onClick={logout} className='navbarLink'>
+                <Typography
+                  variant='h6'
+                  color='inherit'
+                  component='div'
                   sx={{ mr: 2 }}
                 >
                   Log out
@@ -52,21 +62,21 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link to="/login" className="navbarLink">
+              <Link to='/login' className='navbarLink'>
                 <Typography
-                  variant="h6"
-                  color="inherit"
-                  component="div"
+                  variant='h6'
+                  color='inherit'
+                  component='div'
                   sx={{ mr: 2 }}
                 >
                   Login
                 </Typography>
               </Link>
-              <Link to="/register" className="navbarLink">
+              <Link to='/register' className='navbarLink'>
                 <Typography
-                  variant="h6"
-                  color="inherit"
-                  component="div"
+                  variant='h6'
+                  color='inherit'
+                  component='div'
                   sx={{ mr: 2 }}
                 >
                   Register
