@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import UserPage from "./components/UserPage";
 import UserIndex from "./components/UserIndex";
 import CountryPage from "./components/CountryPage";
+// import Explore from "./components/Explore";
 
 import "./App.css";
 
@@ -16,19 +17,18 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 
 function App() {
   return (
-    <div className='App'>
+    <div className="App">
       <Router>
         <Navbar />
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/register' element={<Register />} />
-          {/* <Route path="/explorecontinent/:id" element={<ExploreWorld />} /> */}
-          <Route path='/explorecontinent/:id' element={<ExploreContinent />} />
-          <Route path='/exploreworld' element={<ExploreWorld />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/users' element={<UserIndex />} />
-          <Route path='/users/:id' element={<UserPage />} />
-          <Route path='/countries/:id' element={<CountryPage />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/explorecontinent/:id" element={<ExploreContinent />} />
+          <Route path="/exploreworld" element={<ExploreWorld />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/users" element={<UserIndex />} />
+          <Route path="/users/:id" element={<UserPage />} />
+          <Route path="/countries/:id" element={<CountryPage />} />
         </Routes>
       </Router>
     </div>
