@@ -7,19 +7,16 @@ import { API } from '../../lib/api';
 export default function SearchCountry() {
   const navigate = useNavigate();
   const [availableCountries, setAvailableCountries] = useState([]);
-  const [stateCountry, setStateCountry] = useState('');
 
-  const navigateToCountry = (id) => navigate(`/countries/${id}`);
+  const navigateToCountry = (e) => {
+    navigate(`/countries/${e.target.id}`);
+  };
 
   useEffect(() => {
     API.GET(API.ENDPOINTS.allCountries)
       .then(({ data }) => setAvailableCountries(data))
       .catch((e) => console.log(e));
   }, []);
-
-  const handleCountryChange = (e, value) => {
-    setStateCountry(value);
-  };
 
   return (
     <Box>
@@ -28,7 +25,6 @@ export default function SearchCountry() {
         sx={{ width: 300 }}
         options={availableCountries}
         autoHighlight
-        onChange={handleCountryChange}
         getOptionLabel={(option) => option.name}
         renderOption={(props, option) => (
           <Box
@@ -37,6 +33,7 @@ export default function SearchCountry() {
             sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
             {...props}
             id={option._id}
+            key={option._id}
             onClick={navigateToCountry}
           >
             <img
