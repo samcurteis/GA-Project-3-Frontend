@@ -4,15 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { TextField, Container, Box, Autocomplete, Button } from '@mui/material';
 import { API } from '../../lib/api';
 
-export default function CreateEntry() {
+export default function CreateEntry({ closeCreateEntry, setIsUpdated }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     country: '',
     text: ''
   });
   const [availableCountries, setAvailableCountries] = useState([]);
-
-  const [stateCountry, setStateCountry] = useState('');
 
   useEffect(() => {
     API.GET(API.ENDPOINTS.allCountries)
@@ -26,9 +24,11 @@ export default function CreateEntry() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleCountryChange = (e, value) => {
-    setStateCountry(value);
-    setFormData({ ...formData, country: stateCountry._id });
+  const handleCountryChange = (_e, value) => {
+    console.log(value._id);
+    // setStateCountry(value);
+    // console.log(stateCountry);
+    setFormData({ ...formData, country: value._id });
   };
 
   const handleSubmit = (e) => {
@@ -36,6 +36,8 @@ export default function CreateEntry() {
     API.POST(API.ENDPOINTS.allEntries, formData, API.getHeaders())
       .then(({ data }) => {
         navigate(`/users/${data.addedBy}`);
+        closeCreateEntry();
+        setIsUpdated(true);
       })
       .catch((e) => {
         if (e.status === 301) {
@@ -44,8 +46,6 @@ export default function CreateEntry() {
         console.log(e);
       });
   };
-
-  // const listOfNames = availableCountries.map((country) => country.name);
 
   return (
     <Container
@@ -61,6 +61,7 @@ export default function CreateEntry() {
             autoHighlight
             onChange={handleCountryChange}
             getOptionLabel={(option) => option.name}
+            // getOptionSelected={(option, value) => option._id === value._id}
             renderOption={(props, option) => (
               <Box
                 value={option.name}
