@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TextField, Container, Box, Autocomplete, Button } from '@mui/material';
+import { TextField, Box, Autocomplete } from '@mui/material';
 import { API } from '../../lib/api';
 
 export default function SearchCountry() {
