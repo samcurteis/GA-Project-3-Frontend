@@ -9,29 +9,13 @@ import {
   Geography,
   ZoomableGroup,
 } from "react-simple-maps";
-import { scaleQuantile } from "d3-scale";
+import { scaleLinear } from "d3-scale";
 import { geoReferences } from "../mapping/geoData.js";
 
-const countryValues = {
-  France: 5,
-  Scotland: 3,
-  Spain: 30,
-  Portugal: 1,
-  Germany: 7,
-};
-
 export default function ExploreContinent() {
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const continent = geoReferences.GEOKEYSV2[id].TITLE;
-  const geoUnits = geoReferences.GEOKEYSV2[id].OBJECTS.map(
-    (country) => country.properties.geounit
-  );
   const [countries, setCountries] = useState();
-
-  const colorScale = scaleQuantile()
-    .domain(Object.keys(countryValues).map((d) => countryValues[d]))
-    .range(geoReferences.COLORRANGE);
+  const [visitValues, setVisitValues] = useState();
+  const [colourGrade, setColourGrade] = useState();
 
   const navigateToCountry = (geo) => {
     for (var i = 0; i < countries.length; i++) {
@@ -43,7 +27,7 @@ export default function ExploreContinent() {
 
   function handleMouseEnter(event) {
     // setMousePos({ x: event.clientX, y: event.clientY });
-    console.log(event);
+    // console.log(event);
   }
   function handleMouseLeave() {
     // setContent("out");
@@ -56,11 +40,32 @@ export default function ExploreContinent() {
           geoUnits.includes(country.name)
         );
         setCountries(continentCountries);
+
+        const vvals = continentCountries.map((row) => row.entries.length);
+        setVisitValues([Math.min(...vvals), Math.max(...vvals)]);
+
+        const mapped = continentCountries.map(({ name, entries }) => [
+          name,
+          entries.length,
+        ]);
+
+        const obj = {};
+        mapped.forEach((element) => {
+          obj[element[0]] = element[1];
+        });
+        setColourGrade(obj);
       })
       .catch(({ message, response }) => {
         console.error(message, response);
       });
-  }, [geoUnits]);
+  }, []);
+
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const continent = geoReferences.GEOKEYSV2[id].TITLE;
+  const geoUnits = geoReferences.GEOKEYSV2[id].OBJECTS.map(
+    (country) => country.properties.geounit
+  );
 
   return (
     <div
@@ -88,35 +93,41 @@ export default function ExploreContinent() {
             <Geographies geography={geoReferences.GEOKEYSV2[id].URL}>
               {({ geographies }) =>
                 geographies.map((geo) => {
-                  return (
-                    <>
-                      <Geography
-                        geography={geo}
-                        fill={
-                          Object.keys(countryValues).includes(
-                            geo.properties.geounit
-                          )
-                            ? colorScale(countryValues[geo.properties.geounit])
-                            : "#799F56"
-                        }
-                        stroke="lightgrey"
-                        strokeWidth={0.5}
-                        style={{
-                          default: { outline: "none" },
-                          hover: { outline: "none", fill: "lightblue" },
-                          pressed: { outline: "red" },
-                        }}
-                        key={geo.rsmKey}
-                        onClick={() => navigateToCountry(geo)}
-                        // onClick={(e) => {
-                        //   console.log(e.screenX);
-                        //   console.log(e.screenY);
-                        // }}
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                      />
-                    </>
-                  );
+                  const unit = geo.properties.geounit;
+                  console.log(unit);
+                  if (colourGrade && visitValues) {
+                    const colorScale = scaleLinear()
+                      .domain(visitValues)
+                      .range(["#ffedea", "#ff5233"]);
+
+                    return (
+                      <>
+                        <Geography
+                          geography={geo}
+                          fill={
+                            // "#799F56"
+                            // colorScale(5)
+                            colorScale(colourGrade[unit])
+                          }
+                          stroke="lightgrey"
+                          strokeWidth={0.5}
+                          style={{
+                            default: { outline: "none" },
+                            hover: { outline: "none", fill: "lightblue" },
+                            pressed: { outline: "red" },
+                          }}
+                          key={geo.rsmKey}
+                          onClick={() => navigateToCountry(geo)}
+                          // onClick={(e) => {
+                          //   console.log(e.screenX);
+                          //   console.log(e.screenY);
+                          // }}
+                          onMouseEnter={handleMouseEnter}
+                          onMouseLeave={handleMouseLeave}
+                        />
+                      </>
+                    );
+                  }
                 })
               }
             </Geographies>
