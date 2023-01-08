@@ -74,6 +74,7 @@ export default function UserIndex() {
             <UserCard
               username={user.username}
               cloudinaryImageId={user.cloudinaryImageId}
+              key={user._id}
               id={user._id}
               entries={user.entries}
             />
