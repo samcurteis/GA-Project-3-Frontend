@@ -7,7 +7,7 @@ import CreateEntry from './common/CreateEntry';
 import ProfilePicture from './common/ProfilePicture';
 import EntryCard from './common/EntryCard';
 
-import { Container, Box, CardActions, Button } from '@mui/material';
+import { Container, Box, CardActions, Button, Typography } from '@mui/material';
 
 export default function UserPage() {
   const [isLoggedIn] = useAuthenticated();
@@ -135,17 +135,21 @@ export default function UserPage() {
             )}
           </CardActions>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            {singleUser?.entries?.map((entry) => (
-              <EntryCard
-                key={entry._id}
-                text={entry.text}
-                addedBy={null}
-                country={entry.country}
-                countryId={id}
-                entryId={entry._id}
-                setIsUpdated={setIsUpdated}
-              />
-            ))}
+            {singleUser?.entries?.map((entry) => {
+              return (
+                <EntryCard
+                  key={entry._id}
+                  text={entry.text}
+                  addedBy={null}
+                  userId={singleUser?._id}
+                  userpic={null}
+                  country={entry.country}
+                  countryId={entry.country?._id}
+                  entryId={entry._id}
+                  setIsUpdated={setIsUpdated}
+                />
+              );
+            })}
           </Box>
         </Container>
       </>
