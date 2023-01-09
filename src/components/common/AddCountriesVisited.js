@@ -2,11 +2,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  TextField,
   Container,
-  Box,
-  Autocomplete,
-  Button,
   FormGroup,
   FormControlLabel,
   Checkbox
@@ -17,9 +13,12 @@ export default function AddCountriesVisited({ singleUser }) {
   const [availableCountries, setAvailableCountries] = useState([]);
   const [formData, setFormData] = useState({
     password: '',
-    countriesVisited: []
+    countriesVisited: singleUser?.countriesVisited || []
   });
-  const [countriesVisitedArray, setCountriesVisitedArray] = useState([]);
+
+  useEffect(() => {
+    setFormData({ ...formData, countriesVisited: singleUser.countriesVisited });
+  }, [singleUser.countriesVisited]);
 
   useEffect(() => {
     API.GET(API.ENDPOINTS.allCountries)
@@ -27,24 +26,19 @@ export default function AddCountriesVisited({ singleUser }) {
       .catch((e) => console.log(e));
   }, []);
 
-  // const handleChange = (e) => {
-  //   setFormFields({ ...formFields, [e.target.name]: e.target.value });
-  // };
-
-  // const handleCheckboxChange = (e) => {
-  //   const value = e.target.checked === true ? e.target.id : false;
-  //   setFormFields({ ...formFields, countriesVisited: [value] });
-  //   console.log(e.target.checked);
-  //   console.log(e.target._id);
-  // };
-
   const handleCheckboxChange = (e) => {
-    console.log(e.target);
+    console.log(e.target.checked, e.target.id);
+    setFormData({
+      ...formData,
+      countriesVisited: formData.countriesVisited.includes(e.target.id)
+        ? formData.countriesVisited.filter((i) => i !== e.target.id)
+        : [...formData.countriesVisited, e.target.id]
+    });
     // const value = e.target.type === 'checkbox' ? e.target.id : e.target.value;
     // setCountriesVisitedArray([...countriesVisitedArray, value]);
     // setFormData({ ...formData, countriesVisited: countriesVisitedArray });
   };
-  console.log(singleUser);
+  console.log(formData.countriesVisited);
 
   const [error, setError] = useState(false);
 
@@ -55,12 +49,16 @@ export default function AddCountriesVisited({ singleUser }) {
           {availableCountries.map((country) => {
             return (
               <FormControlLabel
-                control={<Checkbox id={country._id} />}
+                control={
+                  <Checkbox
+                    checked={formData.countriesVisited.includes(country._id)}
+                    id={country._id}
+                  />
+                }
                 onChange={handleCheckboxChange}
                 label={country?.name}
                 key={country._id}
                 id={country._id}
-                value={true}
               />
             );
           })}
@@ -85,3 +83,14 @@ export default function AddCountriesVisited({ singleUser }) {
     </form>
   );
 }
+
+// const handleChange = (e) => {
+//   setFormFields({ ...formFields, [e.target.name]: e.target.value });
+// };
+
+// const handleCheckboxChange = (e) => {
+//   const value = e.target.checked === true ? e.target.id : false;
+//   setFormFields({ ...formFields, countriesVisited: [value] });
+//   console.log(e.target.checked);
+//   console.log(e.target._id);
+// };
