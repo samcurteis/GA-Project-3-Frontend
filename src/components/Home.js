@@ -1,14 +1,11 @@
 export default function Home() {
   return (
-    <h1> not sure what happened</h1>
-    // <ComposableMap>
-    //   <Geographies geography={geoUrl}>
-    //     {({ geographies }) =>
-    //       geographies.map((geo) => (
-    //         <Geography key={geo.rsmKey} geography={geo} />
-    //       ))
-    //     }
-    //   </Geographies>
-    // </ComposableMap>
+    <section className="heroPage">
+      <div>
+        <h1 className="importantTitles maintitle"> Adventure Map</h1>
+        <h3 className="importantTitles subtitle"> Explore the world</h3>
+        <h3 className="importantTitles subtitle"> Share your discoveries</h3>
+      </div>
+    </section>
   );
 }

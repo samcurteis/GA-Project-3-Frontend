@@ -13,7 +13,7 @@ import {
   Button,
   Typography
 } from '@mui/material';
-
+import { padding } from '@mui/system';
 
 export default function CountryPage() {
   const [isLoggedIn] = useAuthenticated();
@@ -64,7 +64,6 @@ export default function CountryPage() {
         variant='h2'
         component='p'
         sx={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}
-        className='importantTitles'
       >
         {singleCountry?.name}
       </Typography>
@@ -79,13 +78,15 @@ export default function CountryPage() {
         <Box>
           <CardContent>
             {singleCountry && (
-              <img
-                loading='lazy'
-                width='200'
-                src={`https://www.worldatlas.com/r/w425/img/flag/${singleCountry.code.toLowerCase()}-flag.jpg`}
-                srcSet={`https://www.worldatlas.com/r/w425/img/flag/${singleCountry.code.toLowerCase()}-flag.jpg 2x`}
-                alt={`${singleCountry.name}`}
-              />
+              <Box sx={{ border: 2 }}>
+                <img
+                  loading='lazy'
+                  width='200'
+                  src={`https://www.worldatlas.com/r/w425/img/flag/${singleCountry.code.toLowerCase()}-flag.jpg`}
+                  srcSet={`https://www.worldatlas.com/r/w425/img/flag/${singleCountry.code.toLowerCase()}-flag.jpg 2x`}
+                  alt={`${singleCountry.name}`}
+                />
+              </Box>
             )}
           </CardContent>
           <CardActions>
