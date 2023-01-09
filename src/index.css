@@ -19,6 +19,11 @@ code {
 
 .importantTitles{
   font-family: 'Lobster', cursive;
+}
+.maintitle{
+  font-size: 4rem;
+}
+.subtitle{
   font-size: 3rem;
 }
 
