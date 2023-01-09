@@ -6,6 +6,7 @@ import { useAuthenticated } from '../hooks/useAuthenticated';
 import CreateEntry from './common/CreateEntry';
 import ProfilePicture from './common/ProfilePicture';
 import EntryCard from './common/EntryCard';
+import AddCountriesVisited from './common/AddCountriesVisited';
 
 import { Container, Box, CardActions, Button, Typography } from '@mui/material';
 
@@ -71,16 +72,15 @@ export default function UserPage() {
                     alignItems: 'center'
                   }}
                 >
-                  <Typography
-                    variant='h3'
-                    sx={{ textTransform: 'capitalize' }}
-                  >
+                  <Typography variant='h3' sx={{ textTransform: 'capitalize' }}>
                     {singleUser?.username}
                   </Typography>
-                  {singleUser?.entries?.length === 1 ? (
+                  {singleUser?.countriesVisited.length === 1 ? (
                     <p>1 country visited</p>
                   ) : (
-                    <p>{singleUser?.entries.length} countries visited</p>
+                    <p>
+                      {singleUser?.countriesVisited.length} countries visited
+                    </p>
                   )}
                 </Box>
               </>
@@ -93,6 +93,11 @@ export default function UserPage() {
               justifyContent: 'center'
             }}
           >
+            <AddCountriesVisited
+              singleUser={singleUser}
+              setIsUpdated={setIsUpdated}
+              isUpdated={isUpdated}
+            />
             <Box>
               <Button
                 size='small'
