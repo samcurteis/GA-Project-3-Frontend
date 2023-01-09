@@ -1,5 +1,13 @@
-import React from "react";
-
 export default function Home() {
-  return <h1>This is the home Page</h1>;
+  return (
+    <ComposableMap>
+      <Geographies geography={geoUrl}>
+        {({ geographies }) =>
+          geographies.map((geo) => (
+            <Geography key={geo.rsmKey} geography={geo} />
+          ))
+        }
+      </Geographies>
+    </ComposableMap>
+  );
 }

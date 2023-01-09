@@ -7,6 +7,7 @@ import {
   CardActions,
   CardContent,
   Button,
+  Box,
   Typography,
   TextareaAutosize
 } from '@mui/material/';
@@ -19,6 +20,7 @@ export default function EntryCard({
   countryId,
   userId,
   userpic,
+  entryPic,
   entryId,
   setIsUpdated
 }) {
@@ -60,54 +62,56 @@ export default function EntryCard({
       })
       .catch((e) => console.log(e));
   };
+
   return (
     <Card sx={{ minWidth: 275 }}>
-      <CardContent>
-        {userpic && <ProfilePicture cloudinaryImageId={userpic} size={100} />}
-        {country?.code && (
-          <img
-            loading='lazy'
-            width='50'
-            src={`https://flagcdn.com/w20/${country.code.toLowerCase()}.png`}
-            srcSet={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png 1x`}
-            alt={country.name}
-          />
-        )}
-
+      <CardContent sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box>
+          {userpic && <ProfilePicture cloudinaryImageId={userpic} size={100} />}
+          {country?.code && (
+            <img
+              loading='lazy'
+              width='50'
+              src={`https://flagcdn.com/w20/${country.code.toLowerCase()}.png`}
+              srcSet={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png 1x`}
+              alt={country.name}
+            />
+          )}
         {addedBy ? (
           <Typography
-            sx={{ fontSize: 14, textTransform: 'capitalize' }}
-            color='text.secondary'
-            gutterBottom
+          sx={{ fontSize: 14, textTransform: 'capitalize' }}
+          color='text.secondary'
+          gutterBottom
           >
             Added by {addedBy}:
           </Typography>
         ) : (
           <Typography
-            sx={{ fontWeight: 'bold', textTransform: 'capitalize' }}
-            color='text.primary'
-            gutterBottom
+          sx={{ fontWeight: 'bold', textTransform: 'capitalize' }}
+          color='text.primary'
+          gutterBottom
             onClick={navigateToCountry}
           >
             {country?.name}
           </Typography>
         )}
-
         {isEditMode ? (
           <TextareaAutosize
-            value={entryText}
-            onChange={handleReviewTextChange}
-            style={{ width: '100%', height: '22px' }}
+          value={entryText}
+          onChange={handleReviewTextChange}
+          style={{ width: '100%', height: '22px' }}
           />
-        ) : (
-          <Typography
+          ) : (
+            <Typography
             variant='h5'
             component='div'
             sx={{ textTransform: 'capitalize' }}
-          >
+            >
             {text}
           </Typography>
         )}
+        </Box>
+        {entryPic && <ProfilePicture cloudinaryImageId={entryPic} size={100} />}
       </CardContent>
       {(AUTH.isOwner(userId) || AUTH.getPayload().isAdmin) && (
         <CardActions>

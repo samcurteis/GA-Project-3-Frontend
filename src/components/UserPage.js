@@ -36,8 +36,6 @@ export default function UserPage() {
   const openCreateEntry = () => setIsCreateEntryOpen(true);
   const closeCreateEntry = () => setIsCreateEntryOpen(false);
 
-  // console.log(AUTH.getPayload().userId);
-
   if (isLoggedIn) {
     return (
       <>
@@ -73,7 +71,12 @@ export default function UserPage() {
                     alignItems: 'center'
                   }}
                 >
-                  <h2>{singleUser?.username}</h2>
+                  <Typography
+                    variant='h3'
+                    sx={{ textTransform: 'capitalize' }}
+                  >
+                    {singleUser?.username}
+                  </Typography>
                   {singleUser?.entries?.length === 1 ? (
                     <p>1 country visited</p>
                   ) : (
@@ -125,6 +128,7 @@ export default function UserPage() {
                 userpic={null}
                 country={entry.country}
                 countryId={entry.country?._id}
+                entryPic={entry.cloudinaryImageId}
                 entryId={entry._id}
                 setIsUpdated={setIsUpdated}
               />
@@ -140,7 +144,6 @@ export default function UserPage() {
             {AUTH.isOwner(singleUser?._id) && (
               <Box
                 sx={{
-                  // display: 'flex',
                   flexDirection: 'column'
                 }}
               >
