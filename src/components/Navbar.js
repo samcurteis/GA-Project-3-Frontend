@@ -4,6 +4,7 @@ import { useAuthenticated } from '../hooks/useAuthenticated';
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 // import UserPage from './UserPage';
 
+
 const Navbar = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useAuthenticated();
@@ -14,10 +15,10 @@ const Navbar = () => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
+    <Box sx={{ flexGrow: 1}}>
+      <AppBar position='static' sx={{ background: '#7CAD3E' }}>
         <Toolbar variant='dense'>
-          <Link to='/'>
+          <Link to='/' className='navbarLink'>
             <Typography
               variant='h6'
               color='inherit'
@@ -27,7 +28,7 @@ const Navbar = () => {
               Home
             </Typography>
           </Link>
-          <Link to='/exploreworld'>
+          <Link to='/exploreworld' className='navbarLink'>
             <Typography
               variant='h6'
               color='inherit'

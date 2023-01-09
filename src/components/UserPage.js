@@ -71,7 +71,12 @@ export default function UserPage() {
                     alignItems: 'center'
                   }}
                 >
-                  <h2>{singleUser?.username}</h2>
+                  <Typography
+                    variant='h3'
+                    sx={{ textTransform: 'capitalize' }}
+                  >
+                    {singleUser?.username}
+                  </Typography>
                   {singleUser?.entries?.length === 1 ? (
                     <p>1 country visited</p>
                   ) : (
@@ -139,7 +144,6 @@ export default function UserPage() {
             {AUTH.isOwner(singleUser?._id) && (
               <Box
                 sx={{
-                  // display: 'flex',
                   flexDirection: 'column'
                 }}
               >

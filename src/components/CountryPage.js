@@ -14,6 +14,7 @@ import {
   Typography
 } from '@mui/material';
 
+
 export default function CountryPage() {
   const [isLoggedIn] = useAuthenticated();
   const navigate = useNavigate();
@@ -59,12 +60,24 @@ export default function CountryPage() {
 
   return (
     <>
-      <Container maxWidth='lg' sx={{ display: 'flex' }}>
+      <Typography
+        variant='h2'
+        component='p'
+        sx={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}
+        className='importantTitles'
+      >
+        {singleCountry?.name}
+      </Typography>
+      <Container
+        maxWidth='lg'
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-around',
+          alignItems: 'center'
+        }}
+      >
         <Box>
           <CardContent>
-            <Typography variant='h2' component='p'>
-              {singleCountry?.name}
-            </Typography>
             {singleCountry && (
               <img
                 loading='lazy'
@@ -81,8 +94,6 @@ export default function CountryPage() {
             </Button>
           </CardActions>
         </Box>
-      </Container>
-      <Container maxWidth='lg'>
         {isLoggedIn && (
           <form onSubmit={handleSubmit}>
             <Box sx={{ mb: 2 }}>
@@ -97,11 +108,13 @@ export default function CountryPage() {
                 name='text'
               />
             </Box>
-            <Button type='submit' sx={{ color: '#3B3D40' }}>
+            <Button type='submit' sx={{ color: '#173042' }}>
               ADD MY VISIT
             </Button>
           </form>
         )}
+      </Container>
+      <Container maxWidth='lg'>
         {!!singleCountry?.entries.length && (
           <Box>
             {singleCountry?.entries?.map((entry) => (

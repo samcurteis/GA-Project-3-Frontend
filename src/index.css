@@ -11,3 +11,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.navbarLink {
+  color: #CFDFDA;
+  text-decoration: none;
+}
+
+.importantTitles{
+  font-family: 'Lobster', cursive;
+  font-size: 3rem;
+}
+
+.heroPage{
+    background-image: url('./assets/globe-35.gif');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      padding-top: 0px;
+      margin-top: 0px;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+}
+
+.lightBlue{
+  color: #236477;
+}
+
+.darkerBlue{
+  color: #173042
+}
+
+.darkerGreen{
+  color: #4A6C2F;
+}
