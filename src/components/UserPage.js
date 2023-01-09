@@ -8,7 +8,7 @@ import ProfilePicture from './common/ProfilePicture';
 import EntryCard from './common/EntryCard';
 import AddCountriesVisited from './common/AddCountriesVisited';
 
-import { Container, Box, CardActions, Button, Typography } from '@mui/material';
+import { Container, Box, CardActions, Button } from '@mui/material';
 
 export default function UserPage() {
   const [isLoggedIn] = useAuthenticated();
@@ -42,7 +42,6 @@ export default function UserPage() {
   if (isLoggedIn) {
     return (
       <>
-        <AddCountriesVisited singleUser={singleUser} />
         <Container
           maxWidth='lg'
           sx={{
@@ -76,10 +75,12 @@ export default function UserPage() {
                   }}
                 >
                   <h2>{singleUser?.username}</h2>
-                  {singleUser?.entries?.length === 1 ? (
+                  {singleUser?.countriesVisited.length === 1 ? (
                     <p>1 country visited</p>
                   ) : (
-                    <p>{singleUser?.entries.length} countries visited</p>
+                    <p>
+                      {singleUser?.countriesVisited.length} countries visited
+                    </p>
                   )}
                 </Box>
               </>
@@ -92,6 +93,11 @@ export default function UserPage() {
               justifyContent: 'center'
             }}
           >
+            <AddCountriesVisited
+              singleUser={singleUser}
+              setIsUpdated={setIsUpdated}
+              isUpdated={isUpdated}
+            />
             <Box>
               <Button
                 size='small'
