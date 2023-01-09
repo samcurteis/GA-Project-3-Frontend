@@ -110,6 +110,7 @@ export default function CountryPage() {
                 text={entry.text}
                 addedBy={entry.addedBy.username}
                 countryId={id}
+                entryPic={entry.cloudinaryImageId}
                 userpic={entry.addedBy.cloudinaryImageId}
                 entryId={entry._id}
                 setIsUpdated={setIsUpdated}

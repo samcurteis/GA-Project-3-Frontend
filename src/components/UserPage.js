@@ -36,8 +36,6 @@ export default function UserPage() {
   const openCreateEntry = () => setIsCreateEntryOpen(true);
   const closeCreateEntry = () => setIsCreateEntryOpen(false);
 
-  // console.log(AUTH.getPayload().userId);
-
   if (isLoggedIn) {
     return (
       <>
@@ -125,6 +123,7 @@ export default function UserPage() {
                 userpic={null}
                 country={entry.country}
                 countryId={entry.country?._id}
+                entryPic={entry.cloudinaryImageId}
                 entryId={entry._id}
                 setIsUpdated={setIsUpdated}
               />

@@ -19,6 +19,7 @@ export default function EntryCard({
   countryId,
   userId,
   userpic,
+  entryPic,
   entryId,
   setIsUpdated
 }) {
@@ -60,6 +61,7 @@ export default function EntryCard({
       })
       .catch((e) => console.log(e));
   };
+
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -92,7 +94,7 @@ export default function EntryCard({
             {country?.name}
           </Typography>
         )}
-
+        {entryPic && <ProfilePicture cloudinaryImageId={entryPic} size={100} />}
         {isEditMode ? (
           <TextareaAutosize
             value={entryText}
