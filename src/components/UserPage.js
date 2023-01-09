@@ -6,6 +6,7 @@ import { useAuthenticated } from '../hooks/useAuthenticated';
 import CreateEntry from './common/CreateEntry';
 import ProfilePicture from './common/ProfilePicture';
 import EntryCard from './common/EntryCard';
+import AddCountriesVisited from './common/AddCountriesVisited';
 
 import { Container, Box, CardActions, Button, Typography } from '@mui/material';
 
@@ -41,6 +42,7 @@ export default function UserPage() {
   if (isLoggedIn) {
     return (
       <>
+        <AddCountriesVisited singleUser={singleUser} />
         <Container
           maxWidth='lg'
           sx={{
