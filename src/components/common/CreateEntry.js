@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Container, Box, Autocomplete, Button } from '@mui/material';
@@ -6,6 +5,7 @@ import { API } from '../../lib/api';
 
 export default function CreateEntry({ closeCreateEntry, setIsUpdated }) {
   const navigate = useNavigate();
+  const [file, setFile] = useState('');
   const [formData, setFormData] = useState({
     country: '',
     text: ''
@@ -26,14 +26,33 @@ export default function CreateEntry({ closeCreateEntry, setIsUpdated }) {
 
   const handleCountryChange = (_e, value) => {
     console.log(value._id);
-    // setStateCountry(value);
-    // console.log(stateCountry);
     setFormData({ ...formData, country: value._id });
   };
 
-  const handleSubmit = (e) => {
+  const handleFileChange = (e) => {
     e.preventDefault();
-    API.POST(API.ENDPOINTS.allEntries, formData, API.getHeaders())
+    setFile(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const imageData = new FormData();
+    imageData.append('file', file);
+    imageData.append(
+      'upload_preset',
+      process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
+    );
+    const cloudinaryResponse = await API.POST(
+      API.ENDPOINTS.cloudinary,
+      imageData
+    );
+
+    const apiReqBody = {
+      ...formData,
+      cloudinaryImageId: cloudinaryResponse.data.public_id
+    };
+
+    await API.POST(API.ENDPOINTS.allEntries, apiReqBody, API.getHeaders())
       .then(({ data }) => {
         navigate(`/users/${data.addedBy}`);
         closeCreateEntry();
@@ -109,10 +128,20 @@ export default function CreateEntry({ closeCreateEntry, setIsUpdated }) {
             name='text'
           />
         </Box>
+        <div>
+          <TextField
+            size='small'
+            name='entry-picture'
+            id='entry-picture'
+            type='file'
+            onChange={handleFileChange}
+            sx={{ mb: 2 }}
+          />
+        </div>
         <Button
           variant='contained'
           type='submit'
-          sx={{ display: 'flex', color: '#3B3D40' }}
+          sx={{ display: 'flex', color: 'white' }}
         >
           ADD MY VISIT
         </Button>

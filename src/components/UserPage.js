@@ -8,7 +8,7 @@ import ProfilePicture from './common/ProfilePicture';
 import EntryCard from './common/EntryCard';
 import AddCountriesVisited from './common/AddCountriesVisited';
 
-import { Container, Box, CardActions, Button } from '@mui/material';
+import { Container, Box, CardActions, Button, Typography } from '@mui/material';
 
 export default function UserPage() {
   const [isLoggedIn] = useAuthenticated();
@@ -36,8 +36,6 @@ export default function UserPage() {
 
   const openCreateEntry = () => setIsCreateEntryOpen(true);
   const closeCreateEntry = () => setIsCreateEntryOpen(false);
-
-  // console.log(AUTH.getPayload().userId);
 
   if (isLoggedIn) {
     return (
@@ -74,7 +72,9 @@ export default function UserPage() {
                     alignItems: 'center'
                   }}
                 >
-                  <h2>{singleUser?.username}</h2>
+                  <Typography variant='h3' sx={{ textTransform: 'capitalize' }}>
+                    {singleUser?.username}
+                  </Typography>
                   {singleUser?.countriesVisited.length === 1 ? (
                     <p>1 country visited</p>
                   ) : (
@@ -133,6 +133,7 @@ export default function UserPage() {
                 userpic={null}
                 country={entry.country}
                 countryId={entry.country?._id}
+                entryPic={entry.cloudinaryImageId}
                 entryId={entry._id}
                 setIsUpdated={setIsUpdated}
               />
@@ -148,7 +149,6 @@ export default function UserPage() {
             {AUTH.isOwner(singleUser?._id) && (
               <Box
                 sx={{
-                  // display: 'flex',
                   flexDirection: 'column'
                 }}
               >
@@ -164,7 +164,7 @@ export default function UserPage() {
                     <Button
                       variant='contained'
                       size='large'
-                      sx={{ color: 'black', br: 2 }}
+                      sx={{ color: 'white', br: 2 }}
                       onClick={openCreateEntry}
                     >
                       Write about it!

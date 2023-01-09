@@ -13,6 +13,7 @@ import {
   Button,
   Typography
 } from '@mui/material';
+import { padding } from '@mui/system';
 
 export default function CountryPage() {
   const [isLoggedIn] = useAuthenticated();
@@ -59,20 +60,33 @@ export default function CountryPage() {
 
   return (
     <>
-      <Container maxWidth='lg' sx={{ display: 'flex' }}>
+      <Typography
+        variant='h2'
+        component='p'
+        sx={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}
+      >
+        {singleCountry?.name}
+      </Typography>
+      <Container
+        maxWidth='lg'
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-around',
+          alignItems: 'center'
+        }}
+      >
         <Box>
           <CardContent>
-            <Typography variant='h2' component='p'>
-              {singleCountry?.name}
-            </Typography>
             {singleCountry && (
-              <img
-                loading='lazy'
-                width='200'
-                src={`https://www.worldatlas.com/r/w425/img/flag/${singleCountry.code.toLowerCase()}-flag.jpg`}
-                srcSet={`https://www.worldatlas.com/r/w425/img/flag/${singleCountry.code.toLowerCase()}-flag.jpg 2x`}
-                alt={`${singleCountry.name}`}
-              />
+              <Box sx={{ border: 2 }}>
+                <img
+                  loading='lazy'
+                  width='200'
+                  src={`https://www.worldatlas.com/r/w425/img/flag/${singleCountry.code.toLowerCase()}-flag.jpg`}
+                  srcSet={`https://www.worldatlas.com/r/w425/img/flag/${singleCountry.code.toLowerCase()}-flag.jpg 2x`}
+                  alt={`${singleCountry.name}`}
+                />
+              </Box>
             )}
           </CardContent>
           <CardActions>
@@ -81,8 +95,6 @@ export default function CountryPage() {
             </Button>
           </CardActions>
         </Box>
-      </Container>
-      <Container maxWidth='lg'>
         {isLoggedIn && (
           <form onSubmit={handleSubmit}>
             <Box sx={{ mb: 2 }}>
@@ -97,11 +109,13 @@ export default function CountryPage() {
                 name='text'
               />
             </Box>
-            <Button type='submit' sx={{ color: '#3B3D40' }}>
+            <Button type='submit' sx={{ color: '#173042' }}>
               ADD MY VISIT
             </Button>
           </form>
         )}
+      </Container>
+      <Container maxWidth='lg'>
         {!!singleCountry?.entries.length && (
           <Box>
             {singleCountry?.entries?.map((entry) => (
@@ -110,6 +124,7 @@ export default function CountryPage() {
                 text={entry.text}
                 addedBy={entry.addedBy.username}
                 countryId={id}
+                entryPic={entry.cloudinaryImageId}
                 userpic={entry.addedBy.cloudinaryImageId}
                 entryId={entry._id}
                 setIsUpdated={setIsUpdated}

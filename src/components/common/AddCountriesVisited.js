@@ -13,7 +13,11 @@ import {
 } from '@mui/material';
 import { API } from '../../lib/api';
 
-export default function AddCountriesVisited({ singleUser, setIsUpdated }) {
+export default function AddCountriesVisited({
+  singleUser,
+  setIsUpdated,
+  isUpdated
+}) {
   const [availableCountries, setAvailableCountries] = useState([]);
   const [formData, setFormData] = useState({
     password: '',
