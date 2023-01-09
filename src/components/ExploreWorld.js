@@ -8,8 +8,8 @@ import {
   Graticule,
   Marker,
 } from "react-simple-maps";
-
-import { geoCentroid } from "d3-geo";
+// import { geoReferences } from "../mapping/geoData.js";
+// import { geoCentroid } from "d3-geo";
 
 import { continentsGeoURL } from "../mapping/continents.js";
 import SearchCountry from "./common/SearchCountry";
@@ -20,14 +20,26 @@ import SearchCountry from "./common/SearchCountry";
 
 //!copied from continents for xy centroids
 const GEOKEYS = {
-  Europe: ["europeGeoURL", [18.5, 51], 4.55, "Europe"],
-  Africa: ["africaGeoURL", [18.5, 2], 2.5, "Africa"],
-  Asia: ["asiaGeoURL", [90, 28], 2.2, "Asia"],
-  North_America: ["northAmericaGeoURL", [-80, 40], 2.5, "North America"],
-  South_America: ["southAmericaGeoURL", [-60, -19], 2.5, "South America"],
-  Australia: ["oceaniaGeoURL", [148, -23], 3.75, "Oceania"],
-  Oceania: ["oceaniaGeoURL", [148, -23], 3.75, "Oceania"],
-  Antarctica: ["antarcticaGeoURL", [148, -23], 3.75, "Antarctica"],
+  Europe: ["europeGeoURL", [18.5, 51], 4.55, "Europe", [19.292002, 48.73989]],
+  Africa: ["africaGeoURL", [18.5, 2], 2.5, "Africa", [18.5, 13]],
+  Asia: ["asiaGeoURL", [90, 28], 2.2, "Asia", [90, 45]],
+  North_America: [
+    "northAmericaGeoURL",
+    [-80, 40],
+    2.5,
+    "North America",
+    [-100, 40],
+  ],
+  South_America: [
+    "southAmericaGeoURL",
+    [-60, -19],
+    2.5,
+    "South America",
+    [-59, -8],
+  ],
+  Australia: ["oceaniaGeoURL", [148, -23], 3.75, "Oceania", [160, -30]],
+  Oceania: ["oceaniaGeoURL", [50, -23], 3.75, "Oceania", [160, -30]],
+  Antarctica: ["antarcticaGeoURL", [148, -23], 3.75, "Antarctica", [120, -105]],
 };
 
 const colors = {
@@ -54,12 +66,14 @@ export default function ExploreWorld() {
   };
 
   const [content, setContent] = useState("");
+  // {/* <Tooltip followCursor={true}>{content}</Tooltip> */}
 
   return (
     <>
-      {/* <h3>Where would you like to go?</h3> */}
-      {/* <Tooltip followCursor={true}>{content}</Tooltip> */}
-      <SearchCountry />
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <SearchCountry />
+        <h4>Or choose a continent on the map...</h4>
+      </div>
       <div
         style={{
           display: "flex",
@@ -78,9 +92,7 @@ export default function ExploreWorld() {
                   {geographies.map((geo) => (
                     <Geography
                       geography={geo}
-                      // fill="#EAEAEC"
                       fill={colors[geo.properties.CONTINENT]}
-                      // stroke="grey"
                       style={{
                         default: { outline: "none" },
                         hover: { outline: "none", fill: "#626868" },
@@ -98,10 +110,7 @@ export default function ExploreWorld() {
                     />
                   ))}
                   {geographies.map((geo) => {
-                    const centroid =
-                      geo.properties.CONTINENT === "Europe"
-                        ? [19.292002, 48.73989]
-                        : geoCentroid(geo);
+                    const centroid = GEOKEYS[geo.properties.CONTINENT][4];
                     return (
                       <>
                         <g key={geo.rsmKey + "-name"}></g>;
