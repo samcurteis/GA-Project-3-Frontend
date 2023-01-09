@@ -1,0 +1,40 @@
+.map-pane {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  background-color: lightgrey;
+}
+
+.map-pane button {
+  height: 35px;
+}
+
+.map-pane div {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+}
+
+
+.map-container {
+  background-color: #80CED8;
+  width: 100%;
+  display: flex;
+  flex-Direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.visits-scale {
+  display: flex;
+  align-items: center;
+}
+
+.visits-scale h4 {
+  height: 35px;
+  width: 55px;
+  text-align: center;
+
+}

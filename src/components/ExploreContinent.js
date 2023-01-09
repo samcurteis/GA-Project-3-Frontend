@@ -1,53 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { API } from "../lib/api.js";
+import { Tooltip } from "react-tooltip";
 
-import { API } from '../lib/api.js';
-
-import { Tooltip } from 'react-tooltip';
 import {
   ComposableMap,
   Geographies,
   Geography,
-  ZoomableGroup
-} from 'react-simple-maps';
+  ZoomableGroup,
+} from "react-simple-maps";
+import { scaleLinear } from "d3-scale";
+import { geoReferences } from "../mapping/geoData.js";
 
-import { europeGeoURL } from '../mapping/countries/europe.js';
-import { africaGeoURL } from '../mapping/countries/africa.js';
-import { asiaGeoURL } from '../mapping/countries/asia.js';
-import { northAmericaGeoURL } from '../mapping/countries/northAmerica.js';
-import { oceaniaGeoURL } from '../mapping/countries/oceania.js';
-import { southAmericaGeoURL } from '../mapping/countries/southAmerica.js';
+import "../styles/explorecontinent.css";
 
-const GEOKEYS = {
-  Europe: [europeGeoURL, [18.5, 51], 4.55, 'Europe'],
-  Africa: [africaGeoURL, [18.5, 2], 2.5, 'Africa'],
-  Asia: [asiaGeoURL, [90, 28], 2.2, 'Asia'],
-  North_America: [northAmericaGeoURL, [-80, 40], 2.5, 'North America'],
-  South_America: [southAmericaGeoURL, [-60, -19], 2.5, 'South America'],
-  Australia: [oceaniaGeoURL, [148, -23], 3.75, 'Oceania'],
-  Oceania: [oceaniaGeoURL, [148, -23], 3.75, 'Oceania']
-};
-
-// export default function ExploreWorld() {
-export default function Home() {
+export default function ExploreContinent() {
+  const colorVals = ["#4B6417", "#D0E89B"];
+  const [content, setContent] = useState("");
   const navigate = useNavigate();
-  const { id } = useParams();
-  const continent = GEOKEYS[id][3];
-
   const [countries, setCountries] = useState();
-
-  useEffect(() => {
-    API.GET(API.ENDPOINTS.allCountries)
-      .then(({ data }) => {
-        setCountries(data);
-      })
-      .catch(({ message, response }) => {
-        console.error(message, response);
-      });
-  }, []);
-
-  // console.log(countries);
+  const [visitValues, setVisitValues] = useState();
+  const [colourGrade, setColourGrade] = useState();
   const navigateToCountry = (geo) => {
     for (var i = 0; i < countries.length; i++) {
       if (geo.properties.geounit === countries[i].name) {
@@ -56,66 +30,123 @@ export default function Home() {
     }
   };
 
-  // const [content, setContent] = useState("");
-  // function handleClick(geo) {
-  //   console.log(geo.properties);
-  //   console.log(geo.properties.CONTINENT);
-  // }
-  // const
+  function handleMouseEnter(geo) {
+    setContent(`${geo}`);
+  }
+  function handleMouseLeave() {
+    setContent("");
+  }
+
+  const handleBack = () => navigate("/exploreworld");
+
+  useEffect(() => {
+    API.GET(API.ENDPOINTS.allCountries)
+      .then(({ data }) => {
+        const continentCountries = data.filter((country) =>
+          geoUnits.includes(country.name)
+        );
+        setCountries(continentCountries);
+
+        const vvals = continentCountries.map((row) => row.entries.length);
+        setVisitValues([Math.min(...vvals), Math.max(...vvals)]);
+
+        const mapped = continentCountries.map(({ name, entries }) => [
+          name,
+          entries.length,
+        ]);
+
+        const obj = {};
+        mapped.forEach((element) => {
+          obj[element[0]] = element[1];
+        });
+        setColourGrade(obj);
+      })
+      .catch(({ message, response }) => {
+        console.error(message, response);
+      });
+  }, []);
+
+  const { id } = useParams();
+  const continent = geoReferences.GEOKEYSV2[id].TITLE;
+  const geoUnits = geoReferences.GEOKEYSV2[id].OBJECTS.map(
+    (country) => country.properties.geounit
+  );
+
   return (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
-      <h2>{continent}</h2>
-      <div
-        style={{
-          width: '75%',
-          height: '65%'
-          // borderStyle: "double",
-        }}
-      >
-        <ComposableMap data-tip='' width={1000} height={650}>
-          <ZoomableGroup
-            zoom={GEOKEYS[id][2]}
-            center={GEOKEYS[id][1]}
-            maxZoom={40}
+    <>
+      <div className="map-pane">
+        <button onClick={handleBack}>{"<- Back 🌍"}</button>
+        <div>
+          <h3>{` ${continent}:`} </h3>
+          <h3>
+            <Tooltip class="tooltip">{content}</Tooltip>
+          </h3>
+        </div>
+        <div className="visits-scale">
+          <h4
+            style={{
+              backgroundColor: colorVals[0],
+            }}
           >
-            <Geographies geography={GEOKEYS[id][0]}>
-              {({ geographies }) =>
-                geographies.map((geo) => (
-                  <Geography
-                    geography={geo}
-                    fill='#799F56'
-                    stroke='lightgrey'
-                    strokeWidth={0.5}
-                    style={{
-                      default: { outline: 'none' },
-                      hover: { outline: 'none', fill: '#EEE' },
-                      pressed: { outline: 'none' }
-                    }}
-                    key={geo.rsmKey}
-                    onClick={() => navigateToCountry(geo)}
-                    onMouseEnter={() => {
-                      const { CONTINENT } = geo.properties;
-                      // console.log(geo);
-                      // setContent(`${CONTINENT}`);
-                    }}
-                    onMouseLeave={() => {
-                      // setContent("");
-                    }}
-                  />
-                ))
-              }
-            </Geographies>
-          </ZoomableGroup>
-        </ComposableMap>
+            {"0"}
+          </h4>
+          <h3>{"Visits -->"}</h3>
+          <h4 style={{ backgroundColor: colorVals[1], width: "55px" }}>
+            {"MOST"}
+          </h4>
+        </div>
       </div>
-    </div>
+
+      <div className="map-container">
+        <div
+          style={{
+            width: "75%",
+            height: "65%",
+          }}
+        >
+          <ComposableMap data-tip="" width={1000} height={650}>
+            <ZoomableGroup
+              zoom={geoReferences.GEOKEYSV2[id].ZOOMLEV}
+              center={geoReferences.GEOKEYSV2[id].XYC}
+              maxZoom={40}
+            >
+              <Geographies geography={geoReferences.GEOKEYSV2[id].URL}>
+                {({ geographies }) =>
+                  geographies.map((geo) => {
+                    const unit = geo.properties.geounit;
+                    if (colourGrade && visitValues) {
+                      const colorScale = scaleLinear()
+                        .domain(visitValues)
+                        .range(colorVals);
+                      return (
+                        <>
+                          <Geography
+                            geography={geo}
+                            fill={colorScale(colourGrade[unit])}
+                            stroke="grey"
+                            strokeWidth={0.3}
+                            style={{
+                              default: { outline: "none" },
+                              hover: { outline: "none", fill: "#FF9101" },
+                              pressed: { outline: "red" },
+                            }}
+                            key={geo.rsmKey}
+                            onClick={() => navigateToCountry(geo)}
+                            onMouseEnter={() => {
+                              handleMouseEnter(unit);
+                            }}
+                            onMouseLeave={handleMouseLeave}
+                          />
+                        </>
+                      );
+                    }
+                  })
+                }
+              </Geographies>
+            </ZoomableGroup>
+          </ComposableMap>
+        </div>
+      </div>
+    </>
   );
 }
