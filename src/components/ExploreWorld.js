@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ComposableMap,
@@ -13,10 +13,8 @@ import {
 
 import { continentsGeoURL } from "../mapping/continents.js";
 import SearchCountry from "./common/SearchCountry";
+import { API } from "../lib/api.js";
 // import './styles/styles.scss';
-
-//TODO tool tip by mouse
-//TODO label countries
 
 //!copied from continents for xy centroids
 const GEOKEYS = {
@@ -53,13 +51,24 @@ const colors = {
   Antarctica: "#d3b794",
 };
 
-// export default function ExploreWorld() {
 export default function ExploreWorld() {
+  const [antarcticaID, setAntarcticaID] = useState();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    API.GET(API.ENDPOINTS.allCountries)
+      .then(({ data }) => {
+        console.log(data[0]._id);
+        setAntarcticaID(data[0]._id);
+      })
+      .catch(({ message, response }) => {
+        console.error(message, response);
+      });
+  }, []);
 
   const navigateToContinent = (geo) => {
     if (geo.properties.CONTINENT === "Antarctica") {
-      navigate(`/`);
+      navigate(`/countries/${antarcticaID}`);
     } else {
       navigate(`/explorecontinent/${geo.properties.CONTINENT}`);
     }
@@ -70,9 +79,16 @@ export default function ExploreWorld() {
 
   return (
     <>
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "lightgrey",
+        }}
+      >
+        <h3>Or choose a continent on the map, OR...</h3>
         <SearchCountry />
-        <h4>Or choose a continent on the map...</h4>
       </div>
       <div
         style={{
@@ -81,20 +97,23 @@ export default function ExploreWorld() {
           justifyContent: "start",
           width: "100%",
           height: "100vh",
+          backgroundColor: "#80CED8",
         }}
       >
         <ComposableMap data-tip="" width={1000} height={500}>
           <ZoomableGroup zoom={1}>
-            <Graticule stroke="#DAD6D2" />
+            <Graticule stroke="grey" />
             <Geographies geography={continentsGeoURL}>
               {({ geographies }) => (
                 <>
                   {geographies.map((geo) => (
                     <Geography
                       geography={geo}
-                      fill={colors[geo.properties.CONTINENT]}
+                      // fill={colors[geo.properties.CONTINENT]}
+                      fill={"#719523"}
+                      stroke={"#22847F"}
                       style={{
-                        default: { outline: "none" },
+                        default: { outline: "black" },
                         hover: { outline: "none", fill: "#626868" },
                         pressed: { outline: "none" },
                       }}

@@ -16,7 +16,7 @@ import { geoReferences } from "../mapping/geoData.js";
 import "../styles/explorecontinent.css";
 
 export default function ExploreContinent() {
-  const colorVals = ["#D0E89B", "#4B6417"];
+  const colorVals = ["#4B6417", "#D0E89B"];
   const [content, setContent] = useState("");
   const navigate = useNavigate();
   const [countries, setCountries] = useState();
@@ -114,7 +114,6 @@ export default function ExploreContinent() {
                 {({ geographies }) =>
                   geographies.map((geo) => {
                     const unit = geo.properties.geounit;
-                    console.log(unit);
                     if (colourGrade && visitValues) {
                       const colorScale = scaleLinear()
                         .domain(visitValues)
@@ -124,8 +123,8 @@ export default function ExploreContinent() {
                           <Geography
                             geography={geo}
                             fill={colorScale(colourGrade[unit])}
-                            stroke="lightgrey"
-                            strokeWidth={0.5}
+                            stroke="grey"
+                            strokeWidth={0.3}
                             style={{
                               default: { outline: "none" },
                               hover: { outline: "none", fill: "#FF9101" },
