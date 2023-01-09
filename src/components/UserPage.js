@@ -159,7 +159,7 @@ export default function UserPage() {
                     <Button
                       variant='contained'
                       size='large'
-                      sx={{ color: 'black', br: 2 }}
+                      sx={{ color: 'white', br: 2 }}
                       onClick={openCreateEntry}
                     >
                       Write about it!

@@ -141,7 +141,7 @@ export default function CreateEntry({ closeCreateEntry, setIsUpdated }) {
         <Button
           variant='contained'
           type='submit'
-          sx={{ display: 'flex', color: '#3B3D40' }}
+          sx={{ display: 'flex', color: 'white' }}
         >
           ADD MY VISIT
         </Button>
