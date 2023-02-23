@@ -241,7 +241,7 @@ Although I do not feel that the final result of the project is in any way perfec
 
 Unfortunately, as adding a checkbox for users to visit came right up to the deadline, it is not yet run through an authenticator which means that it appears on any user page regardless of whether the current user is the same as the user page being viewed, rather than only appearing when the current user is viewing their own page. This would be an easy fix as user authenticators are already implemented in many areas of the app, but I have left the code exactly as it was when we finished the app to show you what we achieved within the week we were given to complete the project.
 
-## Future improvements
+## Future Improvements
 
 Were I to revisit this project I would go through the app to find any bugs that may be present. I would also change the countries visited component to be a little more user-friendly, perhaps offering a dropdown menu rather than checkboxes so that less real estate is required to present the component. I would also have a look at improving the design of the app so that it appears more polished.
 
