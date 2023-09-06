@@ -32,14 +32,14 @@ https://sams-adventure-map.netlify.app
 - Make sure that you have installed Node.js.
 - Download the code for the frontend onto your local machine.
 - Open your terminal and navigate to the root path of the code.
-- Run `npm install` then `npm start'
+- Run `npm install` then `npm start`
  #### For the backend:
  https://github.com/samcurteis/GA-Project-3-BackEnd
 - Repeat the same instructions using the backend repository, except run `npm run dev` instead of `npm start`.
 
 ### Timeframe and Working Team
 
-The project timeframe was one week, and was co-created with fellow General Assembly students, Nathan Harris (https://github.com/nedd-ludd) and Toby Hazledine (https://github.com/CodebyJet)
+The project timeframe was one week, and was co-created with fellow General Assembly students, [Nathan Harris](https://github.com/nedd-ludd) and [Jet Haze](https://github.com/CodebyJet)
 
 ### Technologies Used
 
@@ -54,7 +54,7 @@ Our brief was as follows:
 
 ## Planning
 
-After writing out a wireframe together which showed a layout of our MVP app, alongside some rough requirements of what we wanted our app to perform. 
+After writing out a wireframe together which showed a layout of our MVP (Minimum Viable Product) app, alongside some rough requirements of what we wanted our app to perform. 
 <p align='center'>
 <img alt='Project 3 wireframe 1' src='project-3-wireframe-1.png'>
 </p>
@@ -79,9 +79,9 @@ The aspects of the app which went a little slower at this point were those that 
 
 ### Backend
 
-In terms of the backend, it was my job to create the schema for countries and entries, as well as CRUD functionality for entries and entry data in the seed file. This was a rather smooth and painless process, and the only instance I came across where I did not know what to do straight away was when I wanted to log multiple entry ids on the country model, where I had only ever logged one id per model in previous projects. This was quite an easy fix however, as I followed the simple logic of how JavaScript arrays work and tried wrapping the object id in array brackets.
+In terms of the backend, it was my job to create the schema for countries and entries, as well as CRUD functionality for entries and entry data in the seed file. This was a rather smooth and painless process, and the only instance I came across where I did not know what to do straight away was when I wanted to log multiple entry id'ss on the country model, where I had only ever logged one id per model in previous projects. This was quite an easy fix however, as I followed the simple logic of how JavaScript arrays work and tried wrapping the object id in array brackets.
 
-```
+```*.js
 import mongoose from 'mongoose';
     
      const countrySchema = new mongoose.Schema({
@@ -102,7 +102,7 @@ For our frontend we decided to use the Material UI library to help us build and 
 
 Displaying an entry card on both user and country pages posed a particular challenge because the data displayed had to be different on both, but the format was the same. On the country page, an entry had to show who made the entry, and on the user page it had to show which country the entry was for. I got around this by embedding ternary operators into what the component returned, and entering ‘null’ for the props which didn’t apply when the component was called.
 
-```
+```*.js
        {addedBy ? (
                <Typography
                sx={{ fontSize: 14, textTransform: 'capitalize' }}
@@ -125,7 +125,7 @@ Displaying an entry card on both user and country pages posed a particular chall
 
 The card can then provide different information depending on what information is passed in. On the country page the ‘addedBy’ key is entered, thus displaying one option in the ternary operator.
 
-```
+```*.js
   {!!singleCountry?.entries.length && (
                <Box>
                  {singleCountry?.entries?.map((entry) => (
@@ -144,7 +144,7 @@ The card can then provide different information depending on what information is
 
 And on the user page, the `addedBy` is entered as null, thus triggering the alternative option in the ternary operator.
 
-```
+```*.js
   {singleUser?.entries?.map((entry) => (
                    <EntryCard
                      key={entry._id}
@@ -168,13 +168,13 @@ Having reached our MVP a day in advance I decided to spend the last day implemen
 
 To set up this new feature I added another key on the user model in the backend, which represented an array of country ids:
 
-```
+```*.js
 vountriesVisited: [[ type: mongoose.Types.ObjectId, ref: 'Country' }],
 ```
 
 After testing this in Postman, I moved on to implementing it in the frontend. To achieve this I ran an API call for all countries and then created a checkbox for each country using Material UI components:
 
-```
+```*.js
   {availableCountries.map((country) => {
                        return (
                          <FormControlLabel
@@ -202,7 +202,7 @@ After testing this in Postman, I moved on to implementing it in the frontend. To
 
 If the user has already visited some countries, the box for the countries they have visited is then already logged using the ‘checked’ key on the Checkbox component. I then ran a simple ternary operator within the function for ticking a checkbox, which adds the country to the form data if it isn’t already there, or removes it if it is already there. That form data can then be sent as a put request to update which countries the user has visited.
 
-```
+```*.js
   const handleCheckboxChange = (e) => {
          console.log(e.target.checked, e.target.id);
          setFormData({
@@ -224,7 +224,7 @@ In having only a day to add this last component, I was also not able to implemen
 
 ## Wins
 
-Overall I was very happy with how this project went, as Toby, Nathan and I worked very well together and at no point encountered any blockers or major challenges. This mostly came down to the fact that we stayed in communication with each other throughout the project and were there to give each other a hand whenever we came across a problem we were having trouble figuring out.
+Overall I was very happy with how this project went, as Jet, Nathan and I worked very well together and at no point encountered any blockers or major challenges. This mostly came down to the fact that we stayed in communication with each other throughout the project and were there to give each other a hand whenever we came across a problem we were having trouble figuring out.
 
 This project took place only a few weeks after the previous project that we completed, and I was very happy with the improvement in confidence that I experienced compared to my previous project, both in the planning, teamwork, git management and app-building aspects of the project. I felt like everything ran so much more smoothly.
 
